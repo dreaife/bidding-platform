@@ -11,8 +11,8 @@ export class User {
   @Column({ length: 100, unique: true })
   email: string;
 
-  @Column({ type: 'text' })
-  password_hash: string;
+  @Column({ default: true })
+  is_active: boolean;
 
   @Column({ length: 20 })
   role: string;
