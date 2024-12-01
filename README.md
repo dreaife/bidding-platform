@@ -4,6 +4,7 @@
 
 - frontend: 前端项目
 - backend: 后端项目
+- .github: GitHub Actions 配置
 
 ## 运行
 
