@@ -1,0 +1,33 @@
+name: Deploy to DigitalOcean Droplet
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build project
+      run: npm run build
+
+    - name: Deploy to Droplet
+      uses: appleboy/ssh-action@v0.1.5
+      with:
+        host: ${{ secrets.DROPLET_IP }}
+        username: ${{ secrets.DROPLET_USER }}
+        key: ${{ secrets.DROPLET_KEY }}
+        script: |
+          cd /var/www/bidding-platform
+          git pull origin master || git clone https://github.com/dreaife/bidding-platform.git .
+          npm install
+          npm run build
+          pm2 restart all || pm2 start dist/main.js --name bidding-platform
