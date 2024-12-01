@@ -17,6 +17,13 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document); // 将 Swagger 页面挂载到 /api 路径
 
 
+  app.enableCors({
+    origin: 'https://dreaife.github.io/',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    allowedHeaders: 'Content-Type,Authorization',
+    credentials: true,
+  });
+
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();

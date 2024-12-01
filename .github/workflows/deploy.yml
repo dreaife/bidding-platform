@@ -9,16 +9,41 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    # 步骤 1: 检出代码
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
 
+    # 步骤 2: 安装依赖
     - name: Install dependencies
       run: npm install
 
-    - name: Build project
-      run: npm run build
+    # 步骤 3: 设置 Node.js 环境
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 20 # 使用 Node.js 20
 
+    # 步骤 4: 构建前端
+    - name: Build Frontend
+      working-directory: frontend
+      run: |
+        npm install
+        npm run build --prod # 构建前端项目
+
+
+    # 步骤 5: 安装后端依赖
+    - name: Install Backend Dependencies
+      working-directory: backend
+      run: |
+        npm install
+
+    # 步骤 6: 将前端构建结果移入后端（如果未配置 Angular 输出路径）
+    - name: Move Frontend Build to Backend Public Directory
+      run: |
+        mv frontend/dist/frontend/* backend/public/ 
+
+    # 步骤 7: 部署到 Droplet
     - name: Deploy to Droplet
       uses: appleboy/ssh-action@v0.1.5
       with:
