@@ -14,7 +14,7 @@ async function bootstrap() {
         .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document); // 将 Swagger 页面挂载到 /api 路径
+  SwaggerModule.setup('swagger', app, document); // 将 Swagger 页面挂载到 /swagger 路径
 
 
   app.enableCors({
