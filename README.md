@@ -6,14 +6,28 @@
 - backend: 后端项目
 - .github: GitHub Actions 配置
 
+## 项目依赖
+
+- Node.js
+  - version: v20.18.0
+- Nest.js
+  - version: 10.1.0
+- Angular
+  - version: 16.3.1
+
 ## 运行
 
 - 运行后端：`run-backend.cmd`
+  - 需要先在 backend 目录下运行 `npm install`
+  - 运行 `npm run start` 启动后端
 - 运行前端：`run-frontend.cmd`
+  - 需要先在 frontend 目录下运行 `npm install`
+  - 运行 `npm run start` 启动前端
 
 ## 部署
 
 - 使用 GitHub Actions 部署到 DigitalOcean Droplet
+- 在server上使用nginx部署前端
 
 ## 开发
 
