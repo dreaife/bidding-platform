@@ -18,7 +18,11 @@ async function bootstrap() {
 
 
   app.enableCors({
-    origin: 'https://dreaife.github.io/',
+    origin: [
+      'https://dreaife.github.io/',
+      'http://localhost:4200',
+      'https://bidding-platform.server.digocean.dreaife.tokyo'
+    ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     allowedHeaders: 'Content-Type,Authorization',
     credentials: true,
