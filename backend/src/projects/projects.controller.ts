@@ -7,9 +7,11 @@ import { Role } from '../auth/roles.enum';
 import { RolesGuard } from '../auth/roles.guard';
 import { UseGuards } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import {ProjectsDto}  from '../entities/DTO/projects.dto'
+
 @Controller('projects')
 @UseGuards(RolesGuard)
-@Roles(Role.Client)
+@Roles(Role.Client, Role.Admin)
 @ApiTags('Projects')
 export class ProjectsController {
   constructor(private readonly projectsService: ProjectsService) {}
@@ -43,8 +45,8 @@ export class ProjectsController {
    */
   @Put('/:id')
   @ApiOperation({ summary: '更新项目' })
-  update(@Param('id') id: number, @Body() project: Project) {
-    return this.projectsService.update(id, project);
+  update(@Param('id') id: number, @Body() projectDto: ProjectsDto) {
+    return this.projectsService.update(id, projectDto);
   }
 
   /**
@@ -65,7 +67,7 @@ export class ProjectsController {
    */
   @Post()
   @ApiOperation({ summary: '创建项目' })
-  create(@Body() project: Project) {
-    return this.projectsService.create(project);
+  create(@Body() projectDto: ProjectsDto) {
+    return this.projectsService.create(projectDto);
   }
 }

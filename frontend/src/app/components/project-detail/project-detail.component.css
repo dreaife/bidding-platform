@@ -1,0 +1,67 @@
+.project-detail {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.loading, .error {
+  text-align: center;
+  padding: 20px;
+}
+
+.error {
+  color: #dc3545;
+  background: #fee;
+  border-radius: 4px;
+}
+
+.project-info {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.project-meta {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin: 20px 0;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 4px;
+}
+
+.project-meta p {
+  margin: 0;
+  color: #666;
+}
+
+.project-description {
+  margin: 20px 0;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 4px;
+}
+
+.bids-section {
+  margin-top: 30px;
+}
+
+.bid-card {
+  background: white;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.bid-card p {
+  margin: 5px 0;
+  color: #666;
+}
+
+.bid-card p:first-child {
+  color: #2c3e50;
+  font-weight: bold;
+}

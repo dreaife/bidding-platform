@@ -1,0 +1,39 @@
+<div class="bid-form">
+  <h3>提交投标</h3>
+  
+  <form [formGroup]="bidForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="amount">投标金额</label>
+      <input 
+        type="number" 
+        id="amount"
+        formControlName="amount"
+        [class.invalid]="bidForm.get('amount')?.invalid && bidForm.get('amount')?.touched"
+      >
+      <div class="error-message" *ngIf="bidForm.get('amount')?.invalid && bidForm.get('amount')?.touched">
+        请输入有效的投标金额
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="message">投标说明</label>
+      <textarea 
+        id="message"
+        formControlName="message"
+        [class.invalid]="bidForm.get('message')?.invalid && bidForm.get('message')?.touched"
+      ></textarea>
+      <div class="error-message" *ngIf="bidForm.get('message')?.invalid && bidForm.get('message')?.touched">
+        请输入投标说明
+      </div>
+    </div>
+
+    <div class="error-message" *ngIf="error">{{ error }}</div>
+
+    <button 
+      type="submit" 
+      [disabled]="bidForm.invalid || submitting"
+    >
+      {{ submitting ? '提交中...' : '提交投标' }}
+    </button>
+  </form>
+</div>

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { Project } from '../entities/projects.entity';
+import { ProjectsDto } from 'src/entities/DTO/projects.dto';
 
 @Injectable()
 export class ProjectsService {
@@ -29,7 +30,7 @@ export class ProjectsService {
    * @param project 项目信息
    * @returns 更新后的项目
    */
-  update(id: number, project: Project) {
+  update(id: number, project: ProjectsDto) {
     return this.dataSource.getRepository(Project).update(id, project);
   }
 
@@ -47,7 +48,7 @@ export class ProjectsService {
    * @param project 项目信息
    * @returns 创建后的项目
    */
-  create(project: Project) {
+  create(project: ProjectsDto) {
     return this.dataSource.getRepository(Project).save(project);
   }
 }

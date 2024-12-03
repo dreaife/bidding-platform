@@ -1,0 +1,103 @@
+<div class="admin-dashboard">
+  <h2>管理后台</h2>
+  
+  <div class="tabs">
+    <button 
+      [class.active]="activeTab === 'users'"
+      (click)="activeTab = 'users'">
+      用户管理
+    </button>
+    <button 
+      [class.active]="activeTab === 'projects'"
+      (click)="activeTab = 'projects'">
+      项目管理
+    </button>
+    <button 
+      [class.active]="activeTab === 'bids'"
+      (click)="activeTab = 'bids'">
+      投标管理
+    </button>
+  </div>
+
+  <div class="tab-content" [ngSwitch]="activeTab">
+    <div *ngSwitchCase="'users'" class="users-list">
+      <h3>用户列表</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>用户名</th>
+            <th>邮箱</th>
+            <th>角色</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users">
+            <td>{{user.id}}</td>
+            <td>{{user.username}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.role}}</td>
+            <td>
+              <button (click)="deleteUser(user.id)">删除</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div *ngSwitchCase="'projects'" class="projects-list">
+      <h3>项目列表</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>标题</th>
+            <th>预算</th>
+            <th>状态</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let project of projects">
+            <td>{{project.id}}</td>
+            <td>{{project.title}}</td>
+            <td>{{project.budget}}</td>
+            <td>{{project.status}}</td>
+            <td>
+              <button (click)="deleteProject(project.id)">删除</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div *ngSwitchCase="'bids'" class="bids-list">
+      <h3>投标列表</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>项目ID</th>
+            <th>投标人</th>
+            <th>金额</th>
+            <th>状态</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let bid of bids">
+            <td>{{bid.id}}</td>
+            <td>{{bid.project_id}}</td>
+            <td>{{bid.bidder_id}}</td>
+            <td>{{bid.amount}}</td>
+            <td>{{bid.status}}</td>
+            <td>
+              <button (click)="deleteBid(bid.id)">删除</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

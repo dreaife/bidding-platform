@@ -48,7 +48,7 @@ jobs:
           # 构建前端
           cd frontend
           npm install
-          npm run build
+          npm run build --prod
           
           # 构建后端
           cd ../backend

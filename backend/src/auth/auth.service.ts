@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CognitoIdentityProviderClient, ListUsersCommand } from '@aws-sdk/client-cognito-identity-provider';
+import { CognitoIdentityProviderClient, ListUsersCommand, ConfirmSignUpCommand} from '@aws-sdk/client-cognito-identity-provider';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../entities/users.entity';
@@ -39,9 +39,9 @@ export class AuthService {
         await this.cognitoClient.send(signUpCommand);
 
         const newUser = this.userRepository.create({
-            username: userDto.name,
+            username: userDto.name || userDto.email,
             email: userDto.email,
-            role: userDto.role,
+            role: userDto.role || 'bidder',
         });
         return this.userRepository.save(newUser);
     }
@@ -106,5 +106,16 @@ export class AuthService {
                 await this.userRepository.save(user);
             }
         });
+    }
+
+    async confirmSignUp(email: string, code: string): Promise<any> {
+        const confirmSignUpCommand = new ConfirmSignUpCommand({
+            ClientId: process.env.AWS_COGNITO_CLIENT_ID,
+            Username: email,
+            ConfirmationCode: code,
+        });
+
+        await this.cognitoClient.send(confirmSignUpCommand);
+        return { message: '邮箱验证成功' };
     }
 }

@@ -1,0 +1,65 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <h2>{{ isLogin ? '登录' : (needConfirm ? '确认注册' : '注册') }}</h2>
+    
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group" *ngIf="!isLogin">
+        <label for="username">用户名</label>
+        <input 
+          type="text" 
+          id="username"
+          [(ngModel)]="username"
+          name="username"
+          required
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="email">邮箱</label>
+        <input 
+          type="email" 
+          id="email"
+          [(ngModel)]="email"
+          name="email"
+          required
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="password">密码</label>
+        <input 
+          type="password" 
+          id="password"
+          [(ngModel)]="password"
+          name="password"
+          required
+        >
+      </div>
+
+      <div class="form-group" *ngIf="needConfirm">
+        <label for="confirmationCode">确认码</label>
+        <input 
+          type="text" 
+          id="confirmationCode"
+          [(ngModel)]="confirmationCode"
+          name="confirmationCode"
+          required
+        >
+        <small class="hint">请输入发送到您邮箱的确认码</small>
+      </div>
+
+      <div class="error-message" *ngIf="error">{{ error }}</div>
+
+      <button type="submit" [disabled]="!isValid()">
+        {{ isLogin ? '登录' : (needConfirm ? '确认' : '注册') }}
+      </button>
+    </form>
+
+    <div class="toggle-form" *ngIf="!needConfirm">
+      {{ isLogin ? '还没有账号？' : '已有账号？' }}
+      <a href="javascript:void(0)" (click)="toggleForm()">
+        {{ isLogin ? '立即注册' : '立即登录' }}
+      </a>
+    </div>
+  </div>
+</div>

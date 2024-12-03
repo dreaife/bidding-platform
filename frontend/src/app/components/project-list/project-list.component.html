@@ -1,0 +1,23 @@
+<div class="project-list">
+  <h2>项目列表</h2>
+  
+  <div *ngIf="loading" class="loading">
+    加载中...
+  </div>
+
+  <div *ngIf="error" class="error">
+    {{ error }}
+  </div>
+
+  <div class="projects" *ngIf="!loading && !error">
+    <div *ngFor="let project of projects" class="project-card">
+      <h3>{{ project.title }}</h3>
+      <p>{{ project.description }}</p>
+      <div class="project-details">
+        <span>预算: ¥{{ project.budget_min }} - ¥{{ project.budget_max }}</span>
+        <span>截止日期: {{ project.deadline | date }}</span>
+      </div>
+      <button [routerLink]="['/projects', project.project_id]">查看详情</button>
+    </div>
+  </div>
+</div>

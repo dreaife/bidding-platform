@@ -19,5 +19,10 @@ export class AuthController {
     async register(@Body() userDto: UserDto) {
         return this.authService.register(userDto);
     }
-    
+
+    @Post('confirm')
+    @ApiOperation({ summary: '确认注册' })
+    async confirmSignUp(@Body() confirmDto: { email: string; code: string }) {
+        return this.authService.confirmSignUp(confirmDto.email, confirmDto.code);
+    }
 }

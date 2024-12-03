@@ -1,0 +1,38 @@
+<div class="project-detail">
+  <div *ngIf="loading" class="loading">
+    加载中...
+  </div>
+
+  <div *ngIf="error" class="error">
+    {{ error }}
+  </div>
+
+  <div *ngIf="project && !loading" class="project-info">
+    <h2>{{ project.title }}</h2>
+    <div class="project-meta">
+      <p>预算: ¥{{ project.budget_min }} - ¥{{ project.budget_max }}</p>
+      <p>截止日期: {{ project.deadline | date }}</p>
+      <p>状态: {{ project.status }}</p>
+    </div>
+    
+    <div class="project-description">
+      <h3>项目描述</h3>
+      <p>{{ project.description }}</p>
+    </div>
+
+    <div class="bids-section">
+      <h3>投标列表</h3>
+      <div *ngFor="let bid of bids" class="bid-card">
+        <p>投标金额: ¥{{ bid.amount }}</p>
+        <p>投标说明: {{ bid.message }}</p>
+        <p>状态: {{ bid.status }}</p>
+      </div>
+    </div>
+
+    <app-bid-form 
+      *ngIf="project.status === 'open'"
+      [projectId]="project.project_id"
+      (bidSubmitted)="loadBids(project.project_id)">
+    </app-bid-form>
+  </div>
+</div>

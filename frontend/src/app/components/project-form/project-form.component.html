@@ -1,0 +1,78 @@
+<div class="project-form">
+  <h2>创建新项目</h2>
+
+  <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="title">项目标题</label>
+      <input 
+        type="text" 
+        id="title"
+        formControlName="title"
+        [class.invalid]="projectForm.get('title')?.invalid && projectForm.get('title')?.touched"
+      >
+      <div class="error-message" *ngIf="projectForm.get('title')?.invalid && projectForm.get('title')?.touched">
+        请输入项目标题
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="description">项目描述</label>
+      <textarea 
+        id="description"
+        formControlName="description"
+        [class.invalid]="projectForm.get('description')?.invalid && projectForm.get('description')?.touched"
+      ></textarea>
+      <div class="error-message" *ngIf="projectForm.get('description')?.invalid && projectForm.get('description')?.touched">
+        请输入项目描述
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="budget_min">最低预算</label>
+      <input 
+        type="number" 
+        id="budget_min"
+        formControlName="budget_min"
+        [class.invalid]="projectForm.get('budget_min')?.invalid && projectForm.get('budget_min')?.touched"
+      >
+      <div class="error-message" *ngIf="projectForm.get('budget_min')?.invalid && projectForm.get('budget_min')?.touched">
+        请输入有效的最低预算
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="budget_max">最高预算</label>
+      <input 
+        type="number" 
+        id="budget_max"
+        formControlName="budget_max"
+        [class.invalid]="projectForm.get('budget_max')?.invalid && projectForm.get('budget_max')?.touched"
+      >
+      <div class="error-message" *ngIf="projectForm.get('budget_max')?.invalid && projectForm.get('budget_max')?.touched">
+        请输入有效的最高预算
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="deadline">截止日期</label>
+      <input 
+        type="date" 
+        id="deadline"
+        formControlName="deadline"
+        [class.invalid]="projectForm.get('deadline')?.invalid && projectForm.get('deadline')?.touched"
+      >
+      <div class="error-message" *ngIf="projectForm.get('deadline')?.invalid && projectForm.get('deadline')?.touched">
+        请选择截止日期
+      </div>
+    </div>
+
+    <div class="error-message" *ngIf="error">{{ error }}</div>
+
+    <button 
+      type="submit" 
+      [disabled]="projectForm.invalid || submitting"
+    >
+      {{ submitting ? '创建中...' : '创建项目' }}
+    </button>
+  </form>
+</div>
