@@ -34,13 +34,7 @@ jobs:
       run: |
         npm install
 
-    # 步骤 5: 将前端构建结果移入后端（如果未配置 Angular 输出路径）
-    - name: Move Frontend Build to Backend Public Directory
-      run: |
-        mkdir -p backend/public
-        mv frontend/dist/frontend/* backend/public/ 
-
-    # 步骤 6: 部署到 Droplet
+    # 步骤 5: 部署到 Droplet
     - name: Deploy to Droplet
       uses: appleboy/ssh-action@v0.1.5
       with:
@@ -50,11 +44,20 @@ jobs:
         script: |
           cd /var/www/bidding-platform
           git pull origin master || git clone https://github.com/dreaife/bidding-platform.git .
-          cd backend
+          
+          # 构建前端
+          cd frontend
           npm install
           npm run build
-          cd ../frontend
+          
+          # 构建后端
+          cd ../backend
           npm install
           npm run build
-          cd ..
-          pm2 restart all || pm2 start backend/dist/main.js --name bidding-platform-backend || pm2 start frontend/dist/frontend/index.html --name bidding-platform-frontend
+          
+          # 创建 public 目录并移动前端文件
+          mkdir -p public
+          cp -r ../frontend/dist/frontend/browser/* public/
+          
+          # 启动后端服务
+          pm2 restart all || pm2 start dist/main.js --name bidding-platform-backend
