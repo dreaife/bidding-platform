@@ -24,19 +24,15 @@ jobs:
     - name: Build Frontend
       working-directory: frontend
       run: |
-        cd frontend
         npm install
         npm run build --prod # 构建前端项目
-        cd ..
 
 
     # 步骤 4: 安装后端依赖
     - name: Install Backend Dependencies
       working-directory: backend
       run: |
-        cd backend
         npm install
-        cd ..
 
     # 步骤 5: 将前端构建结果移入后端（如果未配置 Angular 输出路径）
     - name: Move Frontend Build to Backend Public Directory
