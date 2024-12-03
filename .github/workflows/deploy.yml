@@ -55,4 +55,4 @@ jobs:
           git pull origin master || git clone https://github.com/dreaife/bidding-platform.git .
           npm install
           npm run build
-          pm2 restart all || pm2 start dist/main.js --name bidding-platform
+          pm2 restart all || pm2 start backend/dist/main.js --name bidding-platform-backend || pm2 start frontend/dist/frontend/index.html --name bidding-platform-frontend
