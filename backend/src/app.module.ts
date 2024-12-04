@@ -47,6 +47,6 @@ import { MockAuthMiddleware } from './auth/mock-auth.middleware';
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(MockAuthMiddleware).forRoutes('*');
+    // consumer.apply(MockAuthMiddleware).forRoutes('*');
   }
 }

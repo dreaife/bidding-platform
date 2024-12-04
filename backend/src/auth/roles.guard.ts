@@ -2,28 +2,38 @@ import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { ROLES_KEY } from './roles.decorator';
 import { Role } from './roles.enum';
+import { UnauthorizedException } from '@nestjs/common';
+import { AuthService } from './auth.service';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
-  constructor(private reflector: Reflector) {}
+  constructor(private reflector: Reflector,private authService: AuthService) {}
 
-  canActivate(context: ExecutionContext): boolean {
-    const request = context.switchToHttp().getRequest();
-    // console.log('guard request user', request.user);
+  async canActivate(context: ExecutionContext): Promise<boolean> {
+    const requiredRoles = this.reflector.getAllAndOverride<Role[]>(ROLES_KEY, [
+      context.getHandler(),
+      context.getClass(),
+    ]);
 
-    // console.log('guard context', context);
-
-    const requiredRoles = this.reflector.getAllAndOverride<Role[]>(
-      ROLES_KEY,
-      [context.getHandler(), context.getClass()],
-    );
-    // console.log('requiredRoles', requiredRoles);
     if (!requiredRoles) {
-      return false;
+      return true;
     }
-    const { user } = request;
-    // console.log('user', user);
-    const userRoles = user?.role;
-    return requiredRoles.includes(userRoles);
+    console.log('requiredRoles', requiredRoles);
+
+    const request = context.switchToHttp().getRequest();
+    const token = request.headers.authorization?.split(' ')[1];
+    
+    if (!token) {
+      throw new UnauthorizedException('No token provided');
+    }
+
+    const user = await this.authService.getUserFromToken(token);
+    if (!user) {
+      throw new UnauthorizedException('Invalid token');
+    }
+    console.log(user);
+
+    request.user = user; // 将用户信息添加到请求中
+    return requiredRoles.includes(user.role as Role);
   }
 }

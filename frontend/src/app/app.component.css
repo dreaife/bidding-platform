@@ -1,7 +1,28 @@
+/* 移除默认的外边距和内边距 */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0; /* 可根据需要调整背景色 */
+}
+
+h1 {
+  margin: 0;
+  padding: 1rem;
+  background-color: #2c3e50;
+  color: white;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
 .main-nav {
   background: #2c3e50;
-  padding: 1rem;
+  padding: 0 1rem;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
 }
 
 .main-nav a {
@@ -10,13 +31,28 @@
   margin-right: 1.5rem;
   padding: 0.5rem 1rem;
   border-radius: 4px;
-  transition: background-color 0.3s;
+  background-color: #3d566e;
+  transition: background-color 0.3s, transform 0.3s;
+  font-weight: bold;
+  margin: 1rem;
 }
 
 .main-nav a:hover {
-  background: #34495e;
+  background-color: #34495e;
+  transform: scale(1.05);
+}
+
+.main-nav .logout {
+  margin-left: auto;
+  background-color: #e74c3c;
+}
+
+.main-nav .logout:hover {
+  background-color: #c0392b;
 }
 
 router-outlet + * {
   padding: 20px;
+  background-color: white; /* 可根据需要调整内容区域背景 */
+  min-height: calc(100vh - 60px); /* 调整为合适的高度 */
 }

@@ -28,13 +28,16 @@ export class AuthService {
 
   async login(email: string, password: string) {
     try {
-      const response = await this.http.post<{token: string}>(`${this.apiUrl}/login`, {
+      const response = await this.http.post<{token: any, user: any}>(`${this.apiUrl}/login`, {
         email,
         password
       }).toPromise();
       
       if (response?.token) {
-        localStorage.setItem('token', response.token);
+        localStorage.setItem('token', response.token?.AccessToken);
+        localStorage.setItem('role', response.user?.role);
+        console.log('登录成功:', response.user);
+        console.log('token:', response.token);
         this.isAuthenticatedSubject.next(true);
       }
       return response;
@@ -61,6 +64,7 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('role');
     this.isAuthenticatedSubject.next(false);
     this.router.navigate(['/auth']);
   }

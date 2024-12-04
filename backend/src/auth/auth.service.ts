@@ -1,10 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { CognitoIdentityProviderClient, ListUsersCommand, ConfirmSignUpCommand} from '@aws-sdk/client-cognito-identity-provider';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../entities/users.entity';
 import { SignUpCommand, InitiateAuthCommand } from '@aws-sdk/client-cognito-identity-provider';
-import jwt from 'jsonwebtoken';
+import * as jwt from 'jsonwebtoken';
 import jwkToPem from 'jwk-to-pem';
 
 
@@ -74,13 +74,33 @@ export class AuthService {
     }
 
     async verifyToken(token: string): Promise<any> {
-        const url = `https://cognito-idp.${process.env.AWS_REGION}.amazonaws.com/${process.env.AWS_COGNITO_USER_POOL_ID}/.well-known/jwks.json`;
-        const jwks = await fetch(url).then((res) => res.json());
+        try {
+            // 1. 先解码 token 获取 header 中的 kid
+            const decodedToken = jwt.decode(token, { complete: true });
+            if (!decodedToken) {
+                throw new UnauthorizedException('Invalid token format');
+            }
 
-        const jwk = jwks.keys[0];
-        const pem = jwkToPem(jwk);
+            // 2. 获取 JWKS
+            const url = `https://cognito-idp.${process.env.AWS_REGION}.amazonaws.com/${process.env.AWS_COGNITO_USER_POOL_ID}/.well-known/jwks.json`;
+            const jwks = await fetch(url).then((res) => res.json());
 
-        return jwt.verify(token, pem, { algorithms: ['RS256'] });
+            // 3. 根据 kid 找到对应的公钥
+            const kid = decodedToken.header.kid;
+            const jwk = jwks.keys.find((key: any) => key.kid === kid);
+            
+            if (!jwk) {
+                throw new UnauthorizedException('No matching key found');
+            }
+
+            // 4. 转换为 PEM 格式并验证
+            const jwkToPem = require('jwk-to-pem');
+            const pem = jwkToPem(jwk);
+            return jwt.verify(token, pem, { algorithms: ['RS256'] });
+        } catch (error) {
+            console.error('Token verification error:', error);
+            throw new UnauthorizedException('Token verification failed');
+        }
     }
 
     async syncUsers() {
@@ -118,4 +138,28 @@ export class AuthService {
         await this.cognitoClient.send(confirmSignUpCommand);
         return { message: '邮箱验证成功' };
     }
+
+    async getUserFromToken(token: string): Promise<User | null> {
+        try {
+            const decoded = await this.verifyToken(token);
+            console.log('Decoded token:', decoded);
+            const email = decoded['email'];
+            const user = await this.userRepository.findOne({ where: { email } });
+            return user;
+        } catch (error) {
+            console.error('Token verification failed:', error);
+            return null;
+        }
+    }
+
+    // async getRole(user: User): string {
+    //     let userRole = null;
+    //     if (!user.role) {
+    //         let userName = user.username.toLowerCase();
+    //         userRole = this.userRepository.findOne({ where: { username: userName } });
+    //     }else {
+    //         userRole = user.role;
+    //     }
+    //     return userRole;
+    // }
 }

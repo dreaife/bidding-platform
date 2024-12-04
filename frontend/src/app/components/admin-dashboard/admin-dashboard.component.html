@@ -34,13 +34,32 @@
         </thead>
         <tbody>
           <tr *ngFor="let user of users">
-            <td>{{user.id}}</td>
-            <td>{{user.username}}</td>
-            <td>{{user.email}}</td>
-            <td>{{user.role}}</td>
-            <td>
-              <button (click)="deleteUser(user.id)">删除</button>
-            </td>
+            <ng-container *ngIf="editingUser?.user_id !== user.user_id; else editUserRow">
+              <td>{{user.user_id}}</td>
+              <td>{{user.username}}</td>
+              <td>{{user.email}}</td>
+              <td>{{user.role}}</td>
+              <td>
+                <button (click)="editUser(user)">编辑</button>
+                <button (click)="deleteUser(user.user_id)">删除</button>
+              </td>
+            </ng-container>
+            <ng-template #editUserRow>
+              <td>{{user.user_id}}</td>
+              <td><input [(ngModel)]="editingUser.username" /></td>
+              <td><input [(ngModel)]="editingUser.email" /></td>
+              <td>
+                <select [(ngModel)]="editingUser.role">
+                  <option value="admin">管理员</option>
+                  <option value="client">客户</option>
+                  <option value="bidder">投标人</option>
+                </select>
+              </td>
+              <td>
+                <button (click)="saveUser()">保存</button>
+                <button (click)="cancelEdit()">取消</button>
+              </td>
+            </ng-template>
           </tr>
         </tbody>
       </table>
@@ -53,20 +72,42 @@
           <tr>
             <th>ID</th>
             <th>标题</th>
-            <th>预算</th>
+            <th>预算范围</th>
             <th>状态</th>
             <th>操作</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let project of projects">
-            <td>{{project.id}}</td>
-            <td>{{project.title}}</td>
-            <td>{{project.budget}}</td>
-            <td>{{project.status}}</td>
-            <td>
-              <button (click)="deleteProject(project.id)">删除</button>
-            </td>
+            <ng-container *ngIf="editingProject?.project_id !== project.project_id; else editProjectRow">
+              <td>{{project.project_id}}</td>
+              <td>{{project.title}}</td>
+              <td>{{project.budget_min}} - {{project.budget_max}}</td>
+              <td>{{project.status}}</td>
+              <td>
+                <button (click)="editProject(project)">编辑</button>
+                <button (click)="deleteProject(project.project_id)">删除</button>
+              </td>
+            </ng-container>
+            <ng-template #editProjectRow>
+              <td>{{project.project_id}}</td>
+              <td><input [(ngModel)]="editingProject.title" /></td>
+              <td>
+                <input [(ngModel)]="editingProject.budget_min" type="number" style="width: 80px" /> - 
+                <input [(ngModel)]="editingProject.budget_max" type="number" style="width: 80px" />
+              </td>
+              <td>
+                <select [(ngModel)]="editingProject.status">
+                  <option value="open">开放</option>
+                  <option value="in_progress">进行中</option>
+                  <option value="completed">已完成</option>
+                </select>
+              </td>
+              <td>
+                <button (click)="saveProject()">保存</button>
+                <button (click)="cancelEdit()">取消</button>
+              </td>
+            </ng-template>
           </tr>
         </tbody>
       </table>
@@ -78,7 +119,7 @@
         <thead>
           <tr>
             <th>ID</th>
-            <th>项目ID</th>
+            <th>项目</th>
             <th>投标人</th>
             <th>金额</th>
             <th>状态</th>
@@ -87,14 +128,34 @@
         </thead>
         <tbody>
           <tr *ngFor="let bid of bids">
-            <td>{{bid.id}}</td>
-            <td>{{bid.project_id}}</td>
-            <td>{{bid.bidder_id}}</td>
-            <td>{{bid.amount}}</td>
-            <td>{{bid.status}}</td>
-            <td>
-              <button (click)="deleteBid(bid.id)">删除</button>
-            </td>
+            <ng-container *ngIf="editingBid?.bid_id !== bid.bid_id; else editBidRow">
+              <td>{{bid.bid_id}}</td>
+              <td>{{getProjectTitle(bid.project_id)}}</td>
+              <td>{{getUserName(bid.bidder_id)}}</td>
+              <td>{{bid.amount}}</td>
+              <td>{{bid.status}}</td>
+              <td>
+                <button (click)="editBid(bid)">编辑</button>
+                <button (click)="deleteBid(bid.bid_id)">删除</button>
+              </td>
+            </ng-container>
+            <ng-template #editBidRow>
+              <td>{{bid.bid_id}}</td>
+              <td>{{getProjectTitle(bid.project_id)}}</td>
+              <td>{{getUserName(bid.bidder_id)}}</td>
+              <td><input [(ngModel)]="editingBid.amount" type="number" /></td>
+              <td>
+                <select [(ngModel)]="editingBid.status">
+                  <option value="pending">待定</option>
+                  <option value="accepted">已接受</option>
+                  <option value="rejected">已拒绝</option>
+                </select>
+              </td>
+              <td>
+                <button (click)="saveBid()">保存</button>
+                <button (click)="cancelEdit()">取消</button>
+              </td>
+            </ng-template>
           </tr>
         </tbody>
       </table>
