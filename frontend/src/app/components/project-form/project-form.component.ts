@@ -4,7 +4,7 @@ import { ProjectsService } from '../../services/projects.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-project-form',
   standalone: true,
@@ -20,7 +20,8 @@ export class ProjectFormComponent {
   constructor(
     private fb: FormBuilder,
     private projectsService: ProjectsService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {
     this.projectForm = this.fb.group({
       title: ['', Validators.required],
@@ -35,6 +36,10 @@ export class ProjectFormComponent {
     if (this.projectForm.valid) {
       this.submitting = true;
       this.error = '';
+
+      this.authService.currentUser$.subscribe(user => {
+        this.projectForm.value.client_id = user.user_id;
+      });
 
       this.projectsService.createProject(this.projectForm.value).subscribe({
         next: () => {

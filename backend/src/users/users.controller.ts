@@ -29,7 +29,7 @@ export class UsersController {
 
   @Post('/profile/projects')
   @ApiOperation({ summary: '获取当前用户的项目' })
-  @Roles(Role.Client, Role.Admin)
+  @Roles(Role.Client)
   async getUserProjects(@Body('userId') userId: number): Promise<Project[]> {
     this.logger.log(`users getUserProjects by id: ${userId}`);
     return this.usersService.findUserProjects(userId);
@@ -37,7 +37,7 @@ export class UsersController {
 
   @Post('/profile/bids')
   @ApiOperation({ summary: '获取当前用户的投标' })
-  @Roles(Role.Bidder, Role.Admin)
+  @Roles(Role.Bidder)
   async getUserBids(@Body('userId') userId: number): Promise<Bid[]> {
     this.logger.log(`users getUserBids by id: ${userId}`);
     return this.usersService.findUserBids(userId);

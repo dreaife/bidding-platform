@@ -59,12 +59,20 @@ export class AuthService {
         const response = await this.cognitoClient.send(signInCommand);
 
         let user = await this.userRepository.findOne({ where: { email } });
+
+        // console.log('response', response.AuthenticationResult.AccessToken);
+        let cognito_id = this.getCognitoId(response.AuthenticationResult.AccessToken);
+        // console.log('cognito_id', cognito_id);
         if (!user) {
             user = await this.userRepository.create({
                 username: email,
                 email,
-                role: 'bider',
+                role: 'bidder',
+                cognito_id: cognito_id,
             });
+            await this.userRepository.save(user);
+        }else if (user.cognito_id !== cognito_id) {
+            user.cognito_id = cognito_id;
             await this.userRepository.save(user);
         }
         return {
@@ -139,12 +147,22 @@ export class AuthService {
         return { message: '邮箱验证成功' };
     }
 
+    getCognitoId(token: string): string {
+        const decoded = jwt.decode(token, { complete: true });
+        if (!decoded) {
+            throw new Error('Invalid token');
+        }
+        return decoded.payload.sub as string;
+    }
+
     async getUserFromToken(token: string): Promise<User | null> {
         try {
             const decoded = await this.verifyToken(token);
             // console.log('Decoded token:', decoded);
-            const email = decoded['email'];
-            const user = await this.userRepository.findOne({ where: { email } });
+            const cognito_id = decoded['sub'];
+            // console.log('cognito_id', cognito_id);
+            const user = await this.userRepository.findOne({ where: { cognito_id } });
+            // console.log('user', user);
             return user;
         } catch (error) {
             console.error('Token verification failed:', error);

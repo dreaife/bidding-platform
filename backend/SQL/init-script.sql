@@ -11,6 +11,7 @@ CREATE TABLE Users (
     email VARCHAR(100) NOT NULL UNIQUE,    -- 邮箱地址
     password_hash TEXT NOT NULL,           -- 密码哈希值（使用 Cognito 时可忽略）
     role VARCHAR(20) NOT NULL,             -- 用户角色 (e.g., 'bidder', 'client')
+    cognito_id VARCHAR(100),               -- Cognito用户ID
     created_at TIMESTAMP DEFAULT NOW(),    -- 创建时间
     updated_at TIMESTAMP DEFAULT NOW()     -- 更新时间
 );
@@ -45,14 +46,14 @@ CREATE TABLE Bids (
 );
 
 -- 插入初始数据
-INSERT INTO Users (username, email, password_hash, role, created_at)
+INSERT INTO Users (username, email, password_hash, role, cognito_id, created_at)
 VALUES
-('dreaife', 'dreaife@outlook.com', 'hashedpassword', 'client', NOW()),
-('client1', 'client1@example.com', 'hashedpassword1', 'client', NOW()),
-('client2', 'client2@example.com', 'hashedpassword2', 'client', NOW()),
-('bidder1', 'bidder1@example.com', 'hashedpassword3', 'bidder', NOW()),
-('bidder2', 'bidder2@example.com', 'hashedpassword4', 'bidder', NOW()),
-('bidder3', 'bidder3@example.com', 'hashedpassword5', 'bidder', NOW());
+('dreaife', 'dreaife@outlook.com', 'hashedpassword', 'client', 'cognito_id', NOW()),
+('client1', 'client1@example.com', 'hashedpassword1', 'client', 'cognito_id', NOW()),
+('client2', 'client2@example.com', 'hashedpassword2', 'client', 'cognito_id', NOW()),
+('bidder1', 'bidder1@example.com', 'hashedpassword3', 'bidder', 'cognito_id', NOW()),
+('bidder2', 'bidder2@example.com', 'hashedpassword4', 'bidder', 'cognito_id', NOW()),
+('bidder3', 'bidder3@example.com', 'hashedpassword5', 'bidder', 'cognito_id', NOW());
 
 INSERT INTO Projects (client_id, title, description, budget_min, budget_max, deadline, status, created_at)
 VALUES

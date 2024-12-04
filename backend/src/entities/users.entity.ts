@@ -22,4 +22,7 @@ export class User {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @Column({ length: 100 })
+  cognito_id: string;
 }
