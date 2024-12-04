@@ -12,21 +12,21 @@ export class AuthController {
     @Post('login')
     @ApiOperation({ summary: '登录' })  
     async login(@Body() userDto: UserDto) {
-        this.logger.log('auth login', userDto);
+        this.logger.log(`auth login with body: ${JSON.stringify(userDto)}`);
         return this.authService.login(userDto.email, userDto.password);
     }
 
     @Post('register')
     @ApiOperation({ summary: '注册' })
     async register(@Body() userDto: UserDto) {
-        this.logger.log('auth register', userDto);
+        this.logger.log(`auth register with body: ${JSON.stringify(userDto)}`);
         return this.authService.register(userDto);
     }
 
     @Post('confirm')
     @ApiOperation({ summary: '确认注册' })
     async confirmSignUp(@Body() confirmDto: { email: string; code: string }) {
-        this.logger.log('auth confirmSignUp', confirmDto);
+        this.logger.log(`auth confirmSignUp with body: ${JSON.stringify(confirmDto)}`);
         return this.authService.confirmSignUp(confirmDto.email, confirmDto.code);
     }
 }

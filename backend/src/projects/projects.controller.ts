@@ -36,7 +36,7 @@ export class ProjectsController {
   @Get('/:id')
   @ApiOperation({ summary: '查询单个项目' })
   findOne(@Param('id') id: number) {
-    this.logger.log('projects findOne', id);
+    this.logger.log(`projects findOne by id: ${id}`);
     return this.projectsService.findOne(id);
   }
 
@@ -49,7 +49,7 @@ export class ProjectsController {
   @Put('/:id')
   @ApiOperation({ summary: '更新项目' })
   update(@Param('id') id: number, @Body() projectDto: ProjectsDto) {
-    this.logger.log('projects update', id, projectDto);
+    this.logger.log(`projects update by id: ${id} with body: ${JSON.stringify(projectDto)}`);
     return this.projectsService.update(id, projectDto);
   }
 
@@ -61,7 +61,7 @@ export class ProjectsController {
   @Delete('/:id')
   @ApiOperation({ summary: '删除项目' })
   delete(@Param('id') id: number) {
-    this.logger.log('projects delete', id);
+    this.logger.log(`projects delete by id: ${id}`);
     return this.projectsService.delete(id);
   }
 
@@ -73,7 +73,7 @@ export class ProjectsController {
   @Post()
   @ApiOperation({ summary: '创建项目' })
   create(@Body() projectDto: ProjectsDto) {
-    this.logger.log('projects create', projectDto);
+    this.logger.log(`projects create with body: ${JSON.stringify(projectDto)}`);
     return this.projectsService.create(projectDto);
   }
 
@@ -87,7 +87,7 @@ export class ProjectsController {
   @Put('/:id/complete')
   @ApiOperation({ summary: '完成项目' })
   completeProject(@Param('id') id: number) {
-    this.logger.log('projects completeProject', id);
+    this.logger.log(`projects completeProject by id: ${id}`);
     return this.projectsService.completeProject(id);
   }
 }

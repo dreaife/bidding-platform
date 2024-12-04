@@ -29,7 +29,7 @@
     <div class="bids-section" *ngIf="userRole === 'client' || userRole === 'admin'">
       <h3>投标列表</h3>
       <div *ngFor="let bid of sortedBids" class="bid-card" [ngClass]="{'accepted-bid': bid.status === 'accepted'}">
-        <p>投标人: {{ bid.bidder_name }}</p>
+        <p>投标人: {{ getBidderName(bid.bidder_id) }}</p>
         <p>投标金额: ¥{{ bid.amount }}</p>
         <p>投标说明: {{ bid.message }}</p>
         <p>状态: {{ bid.status }}</p>

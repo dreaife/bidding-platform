@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { Bid } from '../entities/bids.entity';
 import { Equal } from 'typeorm';
-
+import { User } from '../entities/users.entity';
 @Injectable()
 export class BidsService {
   constructor(private dataSource: DataSource) {}
@@ -69,5 +69,17 @@ export class BidsService {
    */
   updateStatus(id: number, status: string) {
     return this.dataSource.getRepository(Bid).update(id, { status });
+  }
+
+  /**
+   * 获取投标人姓名
+   * @param id 投标ID
+   * @returns 投标人姓名
+   */
+  getBidUserName(id: number) {
+    return this.dataSource.getRepository(User).findOne({
+      where: { user_id: id },
+      select: ['username']
+    });
   }
 }

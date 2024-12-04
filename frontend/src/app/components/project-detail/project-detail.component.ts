@@ -5,6 +5,7 @@ import { BidsService } from '../../services/bids.service';
 import { CommonModule } from '@angular/common';
 import { BidFormComponent } from '../bid-form/bid-form.component';
 import { AuthService } from '../../services/auth.service';
+import { UsersService } from '../../services/users.service';
 
 @Component({
   selector: 'app-project-detail',
@@ -18,12 +19,14 @@ export class ProjectDetailComponent implements OnInit {
   loading = false;
   error = '';
   userRole: string = '';
+  bidderNames: { [key: number]: string } = {};
 
   constructor(
     private route: ActivatedRoute,
     private projectsService: ProjectsService,
     private bidsService: BidsService,
-    private authService: AuthService
+    private authService: AuthService,
+    private usersService: UsersService
   ) {
     this.userRole = this.authService.getUserRole();
   }
@@ -55,6 +58,9 @@ export class ProjectDetailComponent implements OnInit {
     this.bidsService.getBidsByProjectId(projectId).subscribe({
       next: (data) => {
         this.bids = data;
+        this.bids.forEach(bid => {
+          this.loadBidderName(bid.bidder_id);
+        });
       },
       error: (err) => {
         console.error('加载投标列表错误:', err);
@@ -62,11 +68,26 @@ export class ProjectDetailComponent implements OnInit {
     });
   }
 
+  loadBidderName(bidderId: number) {
+    if (!this.bidderNames[bidderId]) {
+      this.bidsService.getBidUserName(bidderId).subscribe({
+        next: (usernameDto: any) => {
+          // console.log('username:', usernameDto.username);
+          this.bidderNames[bidderId] = usernameDto.username;
+        },
+        error: (err) => {
+          console.error('获取投标人信息失败:', err);
+          this.bidderNames[bidderId] = '未知';
+        }
+      });
+    }
+  }
+
+  getBidderName(bidderId: number): string {
+    return this.bidderNames[bidderId] || '加载中...';
+  }
+
   acceptBid(bidId: number) {
-    console.log('接受投标:', bidId);
-    console.log('项目ID:', this.project.project_id);
-    console.log('项目状态:', this.project.status);
-    console.log('投标ID:', bidId);
     this.bidsService.acceptBid(bidId).subscribe({
       next: () => {
         this.projectsService.closeProject(this.project.project_id).subscribe({

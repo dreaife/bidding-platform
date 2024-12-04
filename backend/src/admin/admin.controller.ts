@@ -31,21 +31,21 @@ export class AdminController {
   @Get('users/:id')
   @ApiOperation({ summary: '获取单个用户' })
   findOneUser(@Param('id') id: number) {
-    this.logger.log('admin findOneUser', id);
+    this.logger.log(`admin findOneUser by id: ${id}`);
     return this.adminService.findOneUser(id);
   }
 
   @Put('users/:id')
   @ApiOperation({ summary: '更新用户' })
   updateUser(@Param('id') id: number, @Body() user: User) {
-    this.logger.log('admin updateUser', id, user);
+    this.logger.log(`admin updateUser by id: ${id} with body: ${JSON.stringify(user)}`);
     return this.adminService.updateUser(id, user);
   }
 
   @Delete('users/:id')
   @ApiOperation({ summary: '删除用户' })
   deleteUser(@Param('id') id: number) {
-    this.logger.log('admin deleteUser', id);
+    this.logger.log(`admin deleteUser by id: ${id}`);
     return this.adminService.deleteUser(id);
   }
 
@@ -60,21 +60,21 @@ export class AdminController {
   @Get('projects/:id')
   @ApiOperation({ summary: '获取单个项目' })
   findOneProject(@Param('id') id: number) {
-    this.logger.log('admin findOneProject', id);
+    this.logger.log(`admin findOneProject by id: ${id}`);
     return this.adminService.findOneProject(id);
   }
 
   @Put('projects/:id')
   @ApiOperation({ summary: '更新项目' })
   updateProject(@Param('id') id: number, @Body() project: Project) {
-    this.logger.log('admin updateProject', id, project);
+    this.logger.log(`admin updateProject by id: ${id} with body: ${JSON.stringify(project)}`);
     return this.adminService.updateProject(id, project);
   }
 
   @Delete('projects/:id')
   @ApiOperation({ summary: '删除项目' })
   deleteProject(@Param('id') id: number) {
-    this.logger.log('admin deleteProject', id);
+    this.logger.log(`admin deleteProject by id: ${id}`);
     return this.adminService.deleteProject(id);
   }
 
@@ -89,21 +89,21 @@ export class AdminController {
   @Get('bids/:id')
   @ApiOperation({ summary: '获取单个投标' })
   findOneBid(@Param('id') id: number) {
-    this.logger.log('admin findOneBid', id);
+    this.logger.log(`admin findOneBid by id: ${id}`);
     return this.adminService.findOneBid(id);
   }
 
   @Put('bids/:id')
   @ApiOperation({ summary: '更新投标' })
   updateBid(@Param('id') id: number, @Body() bid: Bid) {
-    this.logger.log('admin updateBid', id, bid);
+    this.logger.log(`admin updateBid by id: ${id} with body: ${JSON.stringify(bid)}`);
     return this.adminService.updateBid(id, bid);
   }
 
   @Delete('bids/:id')
   @ApiOperation({ summary: '删除投标' })
   deleteBid(@Param('id') id: number) {
-    this.logger.log('admin deleteBid', id);
+    this.logger.log(`admin deleteBid by id: ${id}`);
     return this.adminService.deleteBid(id);
   }
 }

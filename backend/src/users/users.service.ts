@@ -51,4 +51,13 @@ export class UsersService {
   create(user: User) {
     return this.dataSource.getRepository(User).save(user);
   }
+
+  /**
+   * 查询用户名
+   * @param id 用户ID
+   * @returns 用户名
+   */
+  getName(id: number) {
+    return this.dataSource.getRepository(User).findOneBy({ user_id: id });
+  }
 }

@@ -26,4 +26,8 @@ export class BidsService {
   rejectBid(bidId: number): Observable<any> {
     return this.http.put(`${this.apiUrl}/${bidId}/accept`, { status: 'rejected' });
   }
+
+  getBidUserName(bidderId: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/${bidderId}/name`);
+  }
 }
