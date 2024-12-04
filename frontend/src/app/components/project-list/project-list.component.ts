@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProjectsService } from '../../services/projects.service';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-project-list',
@@ -11,16 +12,37 @@ import { CommonModule } from '@angular/common';
 })
 export class ProjectListComponent implements OnInit {
   projects: any[] = [];
+  userRole: string = '';
   loading = false;
   error = '';
 
-  constructor(private projectsService: ProjectsService) {}
-
-  ngOnInit() {
-    this.loadProjects();
+  constructor(
+    private projectsService: ProjectsService,
+    private authService: AuthService
+  ) {
+    this.userRole = this.authService.getUserRole();
   }
 
-  loadProjects() {
+  ngOnInit() {
+    if (this.userRole === 'bidder') {
+      this.loadOpenProjects();
+    } else {
+      this.loadAllProjects();
+    }
+  }
+
+  loadOpenProjects() {
+    this.loading = true;
+    this.projectsService.getOpenProjects().subscribe({
+      next: (data: any) => {
+        this.projects = data;
+        this.loading = false;
+      },
+      error: (err: any) => console.error('加载项目失败:', err)
+    });
+  }
+
+  loadAllProjects() {
     this.loading = true;
     this.projectsService.getAllProjects().subscribe({
       next: (data) => {

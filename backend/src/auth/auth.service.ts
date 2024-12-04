@@ -142,7 +142,7 @@ export class AuthService {
     async getUserFromToken(token: string): Promise<User | null> {
         try {
             const decoded = await this.verifyToken(token);
-            console.log('Decoded token:', decoded);
+            // console.log('Decoded token:', decoded);
             const email = decoded['email'];
             const user = await this.userRepository.findOne({ where: { email } });
             return user;

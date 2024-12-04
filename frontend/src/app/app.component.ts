@@ -16,4 +16,20 @@ export class AppComponent {
   logout() {
     this.authService.logout();
   }
+
+  get userRole(): string {
+    return this.authService.getUserRole();
+  }
+
+  get isAdmin(): boolean {
+    return this.userRole === 'admin';
+  }
+
+  get isClient(): boolean {
+    return this.userRole === 'client';
+  }
+
+  get isBidder(): boolean {
+    return this.userRole === 'bidder';
+  }
 }

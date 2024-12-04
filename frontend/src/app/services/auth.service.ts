@@ -73,6 +73,10 @@ export class AuthService {
     return this.isAuthenticated() && localStorage.getItem('role') === 'admin';
   }
 
+  getUserRole(): string {
+    return localStorage.getItem('role') || '';
+  }
+
   async confirmSignUp(email: string, code: string) {
     try {
       const response = await this.http.post<{message: string}>(`${this.apiUrl}/confirm`, {

@@ -1,4 +1,4 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Logger } from '@nestjs/common'; 
 import { ProjectsService } from './projects.service';
 import { Get, Param, Put, Delete, Body, Post } from '@nestjs/common';
 import { Project } from '../entities/projects.entity';
@@ -14,6 +14,7 @@ import {ProjectsDto}  from '../entities/DTO/projects.dto'
 @Roles(Role.Client, Role.Admin)
 @ApiTags('Projects')
 export class ProjectsController {
+  private logger = new Logger('ProjectsController');
   constructor(private readonly projectsService: ProjectsService) {}
 
   /**
@@ -23,6 +24,7 @@ export class ProjectsController {
   @Get()
   @ApiOperation({ summary: '查询所有项目' })
   findAll() {
+    this.logger.log('projects findAll');
     return this.projectsService.findAll();
   }
 
@@ -34,6 +36,7 @@ export class ProjectsController {
   @Get('/:id')
   @ApiOperation({ summary: '查询单个项目' })
   findOne(@Param('id') id: number) {
+    this.logger.log('projects findOne', id);
     return this.projectsService.findOne(id);
   }
 
@@ -46,6 +49,7 @@ export class ProjectsController {
   @Put('/:id')
   @ApiOperation({ summary: '更新项目' })
   update(@Param('id') id: number, @Body() projectDto: ProjectsDto) {
+    this.logger.log('projects update', id, projectDto);
     return this.projectsService.update(id, projectDto);
   }
 
@@ -57,6 +61,7 @@ export class ProjectsController {
   @Delete('/:id')
   @ApiOperation({ summary: '删除项目' })
   delete(@Param('id') id: number) {
+    this.logger.log('projects delete', id);
     return this.projectsService.delete(id);
   }
 
@@ -68,6 +73,21 @@ export class ProjectsController {
   @Post()
   @ApiOperation({ summary: '创建项目' })
   create(@Body() projectDto: ProjectsDto) {
+    this.logger.log('projects create', projectDto);
     return this.projectsService.create(projectDto);
+  }
+
+  @Get('/open')
+  @ApiOperation({ summary: '查询所有公开项目' })
+  getOpenProjects() {
+    this.logger.log('projects getOpenProjects');
+    return this.projectsService.getOpenProjects();
+  }
+
+  @Put('/:id/complete')
+  @ApiOperation({ summary: '完成项目' })
+  completeProject(@Param('id') id: number) {
+    this.logger.log('projects completeProject', id);
+    return this.projectsService.completeProject(id);
   }
 }

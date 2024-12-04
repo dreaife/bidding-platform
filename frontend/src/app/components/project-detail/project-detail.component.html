@@ -20,19 +20,24 @@
       <p>{{ project.description }}</p>
     </div>
 
-    <div class="bids-section">
-      <h3>投标列表</h3>
-      <div *ngFor="let bid of bids" class="bid-card">
-        <p>投标金额: ¥{{ bid.amount }}</p>
-        <p>投标说明: {{ bid.message }}</p>
-        <p>状态: {{ bid.status }}</p>
-      </div>
-    </div>
-
     <app-bid-form 
-      *ngIf="project.status === 'open'"
+      *ngIf="userRole === 'bidder' && project.status === 'open'"
       [projectId]="project.project_id"
       (bidSubmitted)="loadBids(project.project_id)">
     </app-bid-form>
+
+    <div class="bids-section" *ngIf="userRole === 'client' || userRole === 'admin'">
+      <h3>投标列表</h3>
+      <div *ngFor="let bid of sortedBids" class="bid-card" [ngClass]="{'accepted-bid': bid.status === 'accepted'}">
+        <p>投标人: {{ bid.bidder_name }}</p>
+        <p>投标金额: ¥{{ bid.amount }}</p>
+        <p>投标说明: {{ bid.message }}</p>
+        <p>状态: {{ bid.status }}</p>
+        <div *ngIf="userRole === 'client' && project.status === 'open'" class="bid-actions">
+          <button (click)="acceptBid(bid.bid_id)">接受</button>
+          <button (click)="rejectBid(bid.bid_id)">拒绝</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

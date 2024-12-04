@@ -1,12 +1,8 @@
 <div class="project-list">
   <h2>项目列表</h2>
   
-  <div *ngIf="loading" class="loading">
-    加载中...
-  </div>
-
-  <div *ngIf="error" class="error">
-    {{ error }}
+  <div *ngIf="userRole === 'client'" class="actions">
+    <button routerLink="/projects/new">创建新项目</button>
   </div>
 
   <div class="projects" *ngIf="!loading && !error">
@@ -17,7 +13,13 @@
         <span>预算: ¥{{ project.budget_min }} - ¥{{ project.budget_max }}</span>
         <span>截止日期: {{ project.deadline | date }}</span>
       </div>
-      <button [routerLink]="['/projects', project.project_id]">查看详情</button>
+      <div class="actions">
+        <button [routerLink]="['/projects', project.project_id]">查看详情</button>
+        <button *ngIf="userRole === 'bidder' && project.status === 'open'"
+                [routerLink]="['/projects', project.project_id]">
+          投标
+        </button>
+      </div>
     </div>
   </div>
 </div>

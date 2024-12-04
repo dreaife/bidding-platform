@@ -60,4 +60,14 @@ export class BidsService {
   findByProjectId(projectId: number) {
     return this.dataSource.getRepository(Bid).findBy({ project_id: Equal(projectId) });
   }
+
+  /**
+   * 更新投标状态
+   * @param id 投标ID
+   * @param status 状态
+   * @returns 更新后的投标
+   */
+  updateStatus(id: number, status: string) {
+    return this.dataSource.getRepository(Bid).update(id, { status });
+  }
 }

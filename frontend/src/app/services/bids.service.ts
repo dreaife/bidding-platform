@@ -18,4 +18,12 @@ export class BidsService {
   getBidsByProjectId(projectId: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/project/${projectId}`);
   }
+
+  acceptBid(bidId: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${bidId}/accept`, { status: 'accepted' });
+  }
+
+  rejectBid(bidId: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${bidId}/accept`, { status: 'rejected' });
+  }
 }

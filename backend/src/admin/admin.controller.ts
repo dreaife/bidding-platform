@@ -9,6 +9,7 @@ import { Role } from '../auth/roles.enum';
 import { RolesGuard } from '../auth/roles.guard';
 import { UseGuards } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { Logger } from '@nestjs/common';
 
 @Controller('admin')
 @UseGuards(RolesGuard)
@@ -17,28 +18,34 @@ import { ApiTags, ApiOperation } from '@nestjs/swagger';
 export class AdminController {
   constructor(private readonly adminService: AdminService) {}
 
+  private logger = new Logger('AdminController');
+
   // 用户
   @Get('users')
   @ApiOperation({ summary: '获取所有用户' })
   findAllUsers() {
+    this.logger.log('admin findAllUsers');
     return this.adminService.findAllUsers();
   }
 
   @Get('users/:id')
   @ApiOperation({ summary: '获取单个用户' })
   findOneUser(@Param('id') id: number) {
+    this.logger.log('admin findOneUser', id);
     return this.adminService.findOneUser(id);
   }
 
   @Put('users/:id')
   @ApiOperation({ summary: '更新用户' })
   updateUser(@Param('id') id: number, @Body() user: User) {
+    this.logger.log('admin updateUser', id, user);
     return this.adminService.updateUser(id, user);
   }
 
   @Delete('users/:id')
   @ApiOperation({ summary: '删除用户' })
   deleteUser(@Param('id') id: number) {
+    this.logger.log('admin deleteUser', id);
     return this.adminService.deleteUser(id);
   }
 
@@ -46,24 +53,28 @@ export class AdminController {
   @Get('projects')
   @ApiOperation({ summary: '获取所有项目' })
   findAllProjects() {
+    this.logger.log('admin findAllProjects');
     return this.adminService.findAllProjects();
   }
 
   @Get('projects/:id')
   @ApiOperation({ summary: '获取单个项目' })
   findOneProject(@Param('id') id: number) {
+    this.logger.log('admin findOneProject', id);
     return this.adminService.findOneProject(id);
   }
 
   @Put('projects/:id')
   @ApiOperation({ summary: '更新项目' })
   updateProject(@Param('id') id: number, @Body() project: Project) {
+    this.logger.log('admin updateProject', id, project);
     return this.adminService.updateProject(id, project);
   }
 
   @Delete('projects/:id')
   @ApiOperation({ summary: '删除项目' })
   deleteProject(@Param('id') id: number) {
+    this.logger.log('admin deleteProject', id);
     return this.adminService.deleteProject(id);
   }
 
@@ -71,24 +82,28 @@ export class AdminController {
   @Get('bids')
   @ApiOperation({ summary: '获取所有投标' })
   findAllBids() {
+    this.logger.log('admin findAllBids');
     return this.adminService.findAllBids();
   }
 
   @Get('bids/:id')
   @ApiOperation({ summary: '获取单个投标' })
   findOneBid(@Param('id') id: number) {
+    this.logger.log('admin findOneBid', id);
     return this.adminService.findOneBid(id);
   }
 
   @Put('bids/:id')
   @ApiOperation({ summary: '更新投标' })
   updateBid(@Param('id') id: number, @Body() bid: Bid) {
+    this.logger.log('admin updateBid', id, bid);
     return this.adminService.updateBid(id, bid);
   }
 
   @Delete('bids/:id')
   @ApiOperation({ summary: '删除投标' })
   deleteBid(@Param('id') id: number) {
+    this.logger.log('admin deleteBid', id);
     return this.adminService.deleteBid(id);
   }
 }

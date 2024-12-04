@@ -1,7 +1,9 @@
 <nav class="main-nav" *ngIf="authService.isAuthenticated()">
-  <a routerLink="/projects">项目列表</a>
-  <a routerLink="/projects/new">创建项目</a>
-  <a routerLink="/admin">管理后台</a>
+  <div class="nav-links">
+    <a routerLink="/projects">项目列表</a>
+    <a routerLink="/projects/new" *ngIf="isClient || isAdmin">创建项目</a>
+    <a routerLink="/admin" *ngIf="isAdmin">管理后台</a>
+  </div>
   <a href="javascript:void(0)" (click)="logout()" class="logout">退出登录</a>
 </nav>
 <router-outlet></router-outlet>

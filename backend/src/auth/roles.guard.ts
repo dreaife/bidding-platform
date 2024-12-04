@@ -18,7 +18,7 @@ export class RolesGuard implements CanActivate {
     if (!requiredRoles) {
       return true;
     }
-    console.log('requiredRoles', requiredRoles);
+    // console.log('requiredRoles', requiredRoles);
 
     const request = context.switchToHttp().getRequest();
     const token = request.headers.authorization?.split(' ')[1];
@@ -31,7 +31,7 @@ export class RolesGuard implements CanActivate {
     if (!user) {
       throw new UnauthorizedException('Invalid token');
     }
-    console.log(user);
+    // console.log(user);
 
     request.user = user; // 将用户信息添加到请求中
     return requiredRoles.includes(user.role as Role);

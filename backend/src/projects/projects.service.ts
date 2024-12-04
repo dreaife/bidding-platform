@@ -51,4 +51,21 @@ export class ProjectsService {
   create(project: ProjectsDto) {
     return this.dataSource.getRepository(Project).save(project);
   }
+
+  /**
+   * 查询所有公开项目
+   * @returns 所有公开项目
+   */
+  getOpenProjects() {
+    return this.dataSource.getRepository(Project).find({ where: { status: 'open' } });
+  }
+
+  /**
+   * 完成项目
+   * @param id 项目ID
+   * @returns 完成后的项目
+   */
+  completeProject(id: number) {
+    return this.dataSource.getRepository(Project).update(id, { status: 'completed' });
+  }
 }

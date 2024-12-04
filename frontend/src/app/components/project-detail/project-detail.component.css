@@ -49,11 +49,26 @@
 }
 
 .bid-card {
-  background: white;
-  border: 1px solid #eee;
-  border-radius: 4px;
   padding: 15px;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+.accepted-bid {
+  background-color: #e6f3ff;
+  border-color: #1890ff;
+  font-weight: 500;
+}
+
+.bid-actions {
+  margin-top: 10px;
+}
+
+.bid-actions button {
+  margin-right: 10px;
+  padding: 5px 15px;
 }
 
 .bid-card p {

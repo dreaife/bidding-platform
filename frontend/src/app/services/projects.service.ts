@@ -22,4 +22,12 @@ export class ProjectsService {
   createProject(project: any): Observable<any> {
     return this.http.post(this.apiUrl, project);
   }
+
+  getOpenProjects(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/open`);
+  }
+
+  closeProject(id: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${id}/complete`, {});
+  }
 }

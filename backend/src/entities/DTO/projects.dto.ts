@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber, Min, IsString, IsDate } from 'class-validator';
+import { IsNotEmpty, IsNumber, Min, IsString, IsDate, IsIn } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class ProjectsDto {
@@ -27,4 +27,11 @@ export class ProjectsDto {
   @ApiProperty({ description: '截止日期' })
   @IsNotEmpty()
   deadline: Date;
+}
+
+export class UpdateProjectDto {
+  @ApiProperty({ description: '项目状态' })
+  @IsString()
+  @IsIn(['open', 'in_progress', 'completed'])
+  status: string;
 }

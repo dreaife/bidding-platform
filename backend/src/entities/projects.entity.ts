@@ -24,7 +24,7 @@ export class Project {
   @Column({ type: 'date' })
   deadline: Date;
 
-  @Column({ length: 20, default: 'open' })
+  @Column({ length: 50, default: 'open' })
   status: string;
 
   @CreateDateColumn()

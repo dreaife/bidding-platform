@@ -18,37 +18,40 @@ h1 {
 }
 
 .main-nav {
-  background: #2c3e50;
-  padding: 0 1rem;
+  background-color: #f8f9fa;
+  padding: 1rem;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  display: flex;  /* 添加 flex 布局 */
+  justify-content: space-between;  /* 在主轴上分散对齐 */
+  align-items: center;  /* 在交叉轴上居中对齐 */
+}
+
+/* 左侧导航链接的容器 */
+.nav-links {
   display: flex;
-  align-items: center;
+  gap: 1rem;  /* 链接之间的间距 */
 }
 
 .main-nav a {
-  color: white;
+  color: #333;
   text-decoration: none;
-  margin-right: 1.5rem;
   padding: 0.5rem 1rem;
   border-radius: 4px;
-  background-color: #3d566e;
-  transition: background-color 0.3s, transform 0.3s;
-  font-weight: bold;
-  margin: 1rem;
+  transition: background-color 0.3s;
 }
 
 .main-nav a:hover {
-  background-color: #34495e;
-  transform: scale(1.05);
+  background-color: #e9ecef;
 }
 
-.main-nav .logout {
-  margin-left: auto;
-  background-color: #e74c3c;
+.main-nav a.logout {
+  color: #dc3545;
+  margin-left: auto;  /* 将退出按钮推到最右边 */
 }
 
-.main-nav .logout:hover {
-  background-color: #c0392b;
+.main-nav a.logout:hover {
+  background-color: #dc3545;
+  color: white;
 }
 
 router-outlet + * {

@@ -1,4 +1,4 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, Logger } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { UserDto } from 'src/entities/DTO/users.dto';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
@@ -6,23 +6,27 @@ import { ApiTags, ApiOperation } from '@nestjs/swagger';
 @ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
+    private logger = new Logger('AuthController');
     constructor(private readonly authService: AuthService) {}
 
     @Post('login')
-    @ApiOperation({ summary: '登录' })
+    @ApiOperation({ summary: '登录' })  
     async login(@Body() userDto: UserDto) {
+        this.logger.log('auth login', userDto);
         return this.authService.login(userDto.email, userDto.password);
     }
 
     @Post('register')
     @ApiOperation({ summary: '注册' })
     async register(@Body() userDto: UserDto) {
+        this.logger.log('auth register', userDto);
         return this.authService.register(userDto);
     }
 
     @Post('confirm')
     @ApiOperation({ summary: '确认注册' })
     async confirmSignUp(@Body() confirmDto: { email: string; code: string }) {
+        this.logger.log('auth confirmSignUp', confirmDto);
         return this.authService.confirmSignUp(confirmDto.email, confirmDto.code);
     }
 }
