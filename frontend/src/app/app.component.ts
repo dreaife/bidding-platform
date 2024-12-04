@@ -1,35 +1,50 @@
-import { Component } from '@angular/core';
-import { RouterOutlet, RouterLink } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from './services/auth.service';
+import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { RouterOutlet, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet, RouterLink, CommonModule],
-  templateUrl: `app.component.html`,
+  imports: [CommonModule, RouterOutlet, RouterLink],
+  templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  constructor(public authService: AuthService) {}
-
-  logout() {
-    this.authService.logout();
+export class AppComponent implements OnInit {
+  showDropdown = false;
+  currentUser: any = null;
+  
+  constructor(
+    public authService: AuthService,
+    private router: Router
+  ) {
+    // 订阅用户状态变化
+    this.authService.currentUser$.subscribe(user => {
+      this.currentUser = user;
+      console.log('currentUser updated:', this.currentUser);
+    });
   }
 
-  get userRole(): string {
-    return this.authService.getUserRole();
+  ngOnInit() {
+    // 获取当前用户信息
+    this.loadCurrentUser();
   }
 
   get isAdmin(): boolean {
-    return this.userRole === 'admin';
+    return this.currentUser?.role === 'admin';
   }
 
   get isClient(): boolean {
-    return this.userRole === 'client';
+    return this.currentUser?.role === 'client';
   }
 
-  get isBidder(): boolean {
-    return this.userRole === 'bidder';
+  loadCurrentUser() {
+    this.currentUser = this.authService.getCurrentUser();
+    console.log('currentUser:', this.currentUser);
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/auth']);
   }
 }

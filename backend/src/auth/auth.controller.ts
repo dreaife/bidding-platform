@@ -1,7 +1,7 @@
-import { Controller, Post, Body, Logger } from '@nestjs/common';
+import { Controller, Post, Body, Logger, Get, Headers } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { UserDto } from 'src/entities/DTO/users.dto';
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -28,5 +28,11 @@ export class AuthController {
     async confirmSignUp(@Body() confirmDto: { email: string; code: string }) {
         this.logger.log(`auth confirmSignUp with body: ${JSON.stringify(confirmDto)}`);
         return this.authService.confirmSignUp(confirmDto.email, confirmDto.code);
+    }
+
+    @Get('current-user')
+    @ApiOperation({ summary: '获取当前用户信息' })
+    async getCurrentUser(@Headers('Authorization') token: string) {
+        return this.authService.getCurrentUser(token);
     }
 }

@@ -1,0 +1,54 @@
+<div class="profile-container">
+  <div class="profile-header">
+    <div class="avatar-large">
+      {{ currentUser?.username?.charAt(0)?.toUpperCase() || 'U' }}
+    </div>
+    <div class="user-info">
+      <h2>{{ currentUser?.username }}</h2>
+      <p class="email">{{ currentUser?.email }}</p>
+      <p class="role">{{ currentUser?.role === 'client' ? '客户' : 
+          currentUser?.role === 'bidder' ? '投标人' : 
+          currentUser?.role === 'admin' ? '管理员' : '未知角色' }}</p>
+    </div>
+  </div>
+
+  <div class="loading" *ngIf="loading">
+    加载中...
+  </div>
+
+  <div class="content-section" *ngIf="!loading">
+    <!-- 客户查看自己发布的项目 -->
+    <div *ngIf="currentUser?.role === 'client' && userProjects.length > 0">
+      <h3>我发布的项目</h3>
+      <div class="projects-grid">
+        <div *ngFor="let project of userProjects" class="project-card">
+          <h4>{{ project.title }}</h4>
+          <p class="description">{{ project.description }}</p>
+          <div class="project-meta">
+            <span>预算: ¥{{ project.budget_min }} - ¥{{ project.budget_max }}</span>
+            <span>状态: {{ project.status }}</span>
+            <span>截止日期: {{ project.deadline | date }}</span>
+          </div>
+          <a [routerLink]="['/projects', project.project_id]" class="view-details">查看详情</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 投标人查看自己的投标 -->
+    <div *ngIf="currentUser?.role === 'bidder' && userBids.length > 0">
+      <h3>我的投标</h3>
+      <div class="bids-grid">
+        <div *ngFor="let bid of userBids" class="bid-card">
+          <h4>{{ bid.project?.title }}</h4>
+          <div class="bid-meta">
+            <span>投标金额: ¥{{ bid.amount }}</span>
+            <span>状态: {{ bid.status }}</span>
+            <span>投标时间: {{ bid.created_at | date }}</span>
+          </div>
+          <p class="bid-message">{{ bid.message }}</p>
+          <a [routerLink]="['/projects', bid.project_id]" class="view-details">查看项目</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

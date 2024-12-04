@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { User } from '../entities/users.entity';
+import { Project } from '../entities/projects.entity';
+import { Bid } from '../entities/bids.entity';
 
 @Injectable()
 export class UsersService {
@@ -59,5 +61,43 @@ export class UsersService {
    */
   getName(id: number) {
     return this.dataSource.getRepository(User).findOneBy({ user_id: id });
+  }
+
+  /**
+   * 获取当前用户信息
+   * @param id 用户ID
+   * @returns 用户信息
+   */
+  getCurrentUser(id: number) {
+    return this.dataSource.getRepository(User).findOneBy({ user_id: id });
+  }
+
+  /**
+   * 更新当前用户信息
+   * @param id 用户ID
+   * @param user 用户信息
+   * @returns 更新后的用户
+   */
+  async updateProfile(userId: number, updateData: Partial<User>): Promise<Partial<User>> {
+    await this.dataSource.getRepository(User).update(userId, updateData);
+    return this.findOne(userId);
+  }
+
+  /**
+   * 获取当前用户的项目
+   * @param id 用户ID
+   * @returns 项目列表
+   */
+  findUserProjects(id: number) {
+    return this.dataSource.getRepository(Project).find({ where: { client_id: id } });
+  }
+
+  /**
+   * 获取当前用户的投标
+   * @param id 用户ID
+   * @returns 投标列表
+   */
+  findUserBids(id: number) {
+    return this.dataSource.getRepository(Bid).find({ where: { bidder_id: id } });
   }
 }

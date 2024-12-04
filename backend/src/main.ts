@@ -1,9 +1,16 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { Logger } from '@nestjs/common';
+import { LoggingInterceptor } from './interceptors/logging/logging.interceptor';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  // 创建一个全局 logger 实例
+  const logger = new Logger('App');
+  
+  const app = await NestFactory.create(AppModule, {
+    logger: ['error', 'warn', 'debug', 'log', 'verbose'], // 开启所有级别的日志
+  });
 
   // 添加全局路由前缀
   app.setGlobalPrefix('api');
@@ -31,6 +38,11 @@ async function bootstrap() {
     credentials: true,
   });
 
+  // 使用 LoggingInterceptor
+  // app.useGlobalInterceptors(new LoggingInterceptor());
+
   await app.listen(process.env.PORT ?? 3000);
+  logger.log(`Application is running on: ${await app.getUrl()}`);
+
 }
 bootstrap();

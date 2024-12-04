@@ -1,0 +1,125 @@
+.profile-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 2rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.avatar-large {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #1890ff;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 600;
+  margin-right: 2rem;
+}
+
+.user-info {
+  flex: 1;
+}
+
+.user-info h2 {
+  margin: 0 0 0.5rem 0;
+  color: #333;
+}
+
+.email {
+  color: #666;
+  margin: 0 0 0.5rem 0;
+}
+
+.role {
+  color: #1890ff;
+  font-weight: 500;
+  margin: 0;
+}
+
+.content-section {
+  margin-top: 2rem;
+}
+
+.content-section h3 {
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.projects-grid, .bids-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.project-card, .bid-card {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.project-card h4, .bid-card h4 {
+  margin: 0 0 1rem 0;
+  color: #333;
+}
+
+.description {
+  color: #666;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.project-meta, .bid-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  color: #666;
+}
+
+.view-details {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background: #1890ff;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+.view-details:hover {
+  background: #40a9ff;
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+}
+
+@media (max-width: 768px) {
+  .profile-header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .avatar-large {
+    margin: 0 0 1rem 0;
+  }
+
+  .projects-grid, .bids-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -17,41 +17,206 @@ h1 {
   margin-bottom: 1rem;
 }
 
-.main-nav {
-  background-color: #f8f9fa;
-  padding: 1rem;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  display: flex;  /* 添加 flex 布局 */
-  justify-content: space-between;  /* 在主轴上分散对齐 */
-  align-items: center;  /* 在交叉轴上居中对齐 */
+.header {
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
-/* 左侧导航链接的容器 */
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+}
+
+.nav-brand a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #333;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.logo {
+  height: 32px;
+  margin-right: 0.5rem;
+}
+
 .nav-links {
   display: flex;
-  gap: 1rem;  /* 链接之间的间距 */
+  gap: 2rem;
+  margin: 0 2rem;
 }
 
-.main-nav a {
-  color: #333;
+.nav-links a {
   text-decoration: none;
+  color: #666;
+  font-weight: 500;
   padding: 0.5rem 1rem;
   border-radius: 4px;
-  transition: background-color 0.3s;
+  transition: all 0.3s ease;
 }
 
-.main-nav a:hover {
-  background-color: #e9ecef;
+.nav-links a:hover {
+  color: #1890ff;
+  background: rgba(24,144,255,0.1);
 }
 
-.main-nav a.logout {
-  color: #dc3545;
-  margin-left: auto;  /* 将退出按钮推到最右边 */
+.nav-links a.active {
+  color: #1890ff;
+  background: rgba(24,144,255,0.1);
 }
 
-.main-nav a.logout:hover {
-  background-color: #dc3545;
+.user-menu {
+  position: relative;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.user-info:hover {
+  background: rgba(0,0,0,0.04);
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #1890ff;
   color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  margin-right: 0.5rem;
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+  margin-right: 0.5rem;
+}
+
+.username {
+  font-weight: 500;
+  color: #333;
+  font-size: 0.9rem;
+}
+
+.role {
+  color: #999;
+  font-size: 0.8rem;
+}
+
+.arrow-down {
+  border: solid #666;
+  border-width: 0 2px 2px 0;
+  display: inline-block;
+  padding: 3px;
+  transform: rotate(45deg);
+  margin-left: 0.5rem;
+}
+
+.user-info-container {
+  position: relative;
+  padding: 0.5rem;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% - 0.5rem);
+  right: 0;
+  margin-top: 0.5rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  min-width: 200px;
+  padding: 0.5rem 0;
+  animation: slideDown 0.2s ease;
+}
+
+.menu-header {
+  padding: 1rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.menu-username {
+  display: block;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.25rem;
+}
+
+.menu-email {
+  display: block;
+  font-size: 0.8rem;
+  color: #999;
+}
+
+.menu-divider {
+  height: 1px;
+  background: #f0f0f0;
+  margin: 0.5rem 0;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  color: #666;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.menu-item:hover {
+  background: rgba(0,0,0,0.04);
+  color: #1890ff;
+}
+
+.menu-item i {
+  margin-right: 0.5rem;
+  font-size: 1.1rem;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+  
+  .user-details {
+    display: none;
+  }
 }
 
 router-outlet + * {

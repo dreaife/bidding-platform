@@ -1,9 +1,47 @@
-<nav class="main-nav" *ngIf="authService.isAuthenticated()">
-  <div class="nav-links">
-    <a routerLink="/projects">项目列表</a>
-    <a routerLink="/projects/new" *ngIf="isClient || isAdmin">创建项目</a>
-    <a routerLink="/admin" *ngIf="isAdmin">管理后台</a>
-  </div>
-  <a href="javascript:void(0)" (click)="logout()" class="logout">退出登录</a>
-</nav>
+<header class="header" *ngIf="authService.isAuthenticated()">
+  <nav class="nav-container">
+    <div class="nav-brand">
+      <a routerLink="/projects">
+        <img src="assets/logo.png" alt="Logo" class="logo" />
+        <span>投标平台</span>
+      </a>
+    </div>
+    
+    <div class="nav-links">
+      <a routerLink="/projects" routerLinkActive="active">项目列表</a>
+      <a routerLink="/projects/new" *ngIf="isClient || isAdmin" routerLinkActive="active">创建项目</a>
+      <a routerLink="/admin" *ngIf="isAdmin" routerLinkActive="active">管理后台</a>
+    </div>
+
+    <div class="user-menu">
+      <div class="user-info-container" (mouseenter)="showDropdown = true" (mouseleave)="showDropdown = false">
+        <div class="user-info">
+          <div class="avatar">{{ currentUser?.username?.charAt(0)?.toUpperCase() || 'U' }}</div>
+          <div class="user-details">
+            <span class="username">{{ currentUser?.username || '用户' }}</span>
+            <span class="role">{{ currentUser?.role || '游客' }}</span>
+          </div>
+          <i class="arrow-down"></i>
+        </div>
+        
+        <div class="dropdown-menu" *ngIf="showDropdown">
+          <div class="menu-header">
+            <span class="menu-username">{{ currentUser?.username }}</span>
+            <span class="menu-email">{{ currentUser?.email }}</span>
+          </div>
+          <div class="menu-divider"></div>
+          <a class="menu-item" routerLink="/profile">
+            <i class="material-icons">settings</i>
+            个人设置
+          </a>
+          <a class="menu-item" (click)="logout()">
+            <i class="material-icons">logout</i>
+            退出登录
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
 <router-outlet></router-outlet>

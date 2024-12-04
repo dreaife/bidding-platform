@@ -152,14 +152,9 @@ export class AuthService {
         }
     }
 
-    // async getRole(user: User): string {
-    //     let userRole = null;
-    //     if (!user.role) {
-    //         let userName = user.username.toLowerCase();
-    //         userRole = this.userRepository.findOne({ where: { username: userName } });
-    //     }else {
-    //         userRole = user.role;
-    //     }
-    //     return userRole;
-    // }
+    async getCurrentUser(token: string) {
+        let user = await this.getUserFromToken(token);
+        // console.log('user:', user);
+        return user;
+    }
 }

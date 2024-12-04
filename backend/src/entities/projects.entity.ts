@@ -6,8 +6,8 @@ export class Project {
   @PrimaryGeneratedColumn()
   project_id: number;
 
-  @ManyToOne(() => User, (user) => user.user_id, { onDelete: 'CASCADE' })
-  client_id: User;
+  @Column({ type: 'integer' })
+  client_id: number;
 
   @Column({ length: 100 })
   title: string;
