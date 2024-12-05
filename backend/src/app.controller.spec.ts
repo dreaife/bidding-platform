@@ -3,20 +3,41 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
 describe('AppController', () => {
-  let appController: AppController;
+  let controller: AppController;
+  let service: AppService;
+
+  const mockAppService = {
+    getHello: jest
+      .fn()
+      .mockReturnValue(
+        'Hello World!\nGet started at https://github.com/dreaife/bidding-platform\nGet API docs at /swagger',
+      ),
+  };
 
   beforeEach(async () => {
-    const app: TestingModule = await Test.createTestingModule({
+    const module: TestingModule = await Test.createTestingModule({
       controllers: [AppController],
-      providers: [AppService],
+      providers: [
+        {
+          provide: AppService,
+          useValue: mockAppService,
+        },
+      ],
     }).compile();
 
-    appController = app.get<AppController>(AppController);
+    controller = module.get<AppController>(AppController);
+    service = module.get<AppService>(AppService);
   });
 
-  describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
+  it('should be defined', () => {
+    expect(controller).toBeDefined();
+  });
+
+  describe('getHello', () => {
+    it('应该返回欢迎信息', () => {
+      const result = controller.getHello();
+      expect(result).toBe(mockAppService.getHello());
+      expect(service.getHello).toHaveBeenCalled();
     });
   });
 });

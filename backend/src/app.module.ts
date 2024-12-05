@@ -11,8 +11,7 @@ import { Bid } from './entities/bids.entity';
 import { ProjectsModule } from './projects/projects.module';
 import { BidsModule } from './bids/bids.module';
 import { AdminModule } from './admin/admin.module';
-import { NestModule, MiddlewareConsumer } from '@nestjs/common';
-import { MockAuthMiddleware } from './auth/mock-auth.middleware';
+import { NestModule } from '@nestjs/common';
 
 @Module({
   imports: [
@@ -46,7 +45,7 @@ import { MockAuthMiddleware } from './auth/mock-auth.middleware';
   providers: [AppService],
 })
 export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
+  configure() {
     // consumer.apply(MockAuthMiddleware).forRoutes('*');
   }
 }

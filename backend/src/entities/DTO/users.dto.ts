@@ -1,4 +1,10 @@
-import { IsNotEmpty, IsString, MinLength, MaxLength, IsEmail } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsString,
+  MinLength,
+  MaxLength,
+  IsEmail,
+} from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 export class UserDto {
   @ApiProperty({ description: '邮箱', example: 'test@example.com' })
@@ -19,9 +25,12 @@ export class UserDto {
   @MaxLength(32)
   name: string;
 
-  @ApiProperty({ description: '角色', enum: ['bidder', 'publisher', 'admin'], default: 'bidder' })
+  @ApiProperty({
+    description: '角色',
+    enum: ['bidder', 'publisher', 'admin'],
+    default: 'bidder',
+  })
   @IsNotEmpty()
   @IsString()
   role: string;
 }
-

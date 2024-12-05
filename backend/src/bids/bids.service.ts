@@ -58,7 +58,9 @@ export class BidsService {
    * @returns 投标
    */
   findByProjectId(projectId: number) {
-    return this.dataSource.getRepository(Bid).findBy({ project_id: Equal(projectId) });
+    return this.dataSource
+      .getRepository(Bid)
+      .findBy({ project_id: Equal(projectId) });
   }
 
   /**
@@ -79,7 +81,7 @@ export class BidsService {
   getBidUserName(id: number) {
     return this.dataSource.getRepository(User).findOne({
       where: { user_id: id },
-      select: ['username']
+      select: ['username'],
     });
   }
 }

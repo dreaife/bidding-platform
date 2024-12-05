@@ -1,13 +1,12 @@
-import { Controller, Logger } from '@nestjs/common'; 
+import { Controller, Logger } from '@nestjs/common';
 import { ProjectsService } from './projects.service';
 import { Get, Param, Put, Delete, Body, Post } from '@nestjs/common';
-import { Project } from '../entities/projects.entity';
 import { Roles } from '../auth/roles.decorator';
 import { Role } from '../auth/roles.enum';
 import { RolesGuard } from '../auth/roles.guard';
 import { UseGuards } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
-import {ProjectsDto}  from '../entities/DTO/projects.dto'
+import { ProjectsDto } from '../entities/DTO/projects.dto';
 
 @Controller('projects')
 @UseGuards(RolesGuard)
@@ -49,7 +48,9 @@ export class ProjectsController {
   @Put('/:id')
   @ApiOperation({ summary: '更新项目' })
   update(@Param('id') id: number, @Body() projectDto: ProjectsDto) {
-    this.logger.log(`projects update by id: ${id} with body: ${JSON.stringify(projectDto)}`);
+    this.logger.log(
+      `projects update by id: ${id} with body: ${JSON.stringify(projectDto)}`,
+    );
     return this.projectsService.update(id, projectDto);
   }
 

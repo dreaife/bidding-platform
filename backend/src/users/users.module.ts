@@ -9,6 +9,6 @@ import { AuthModule } from '../auth/auth.module';
     // ... 其他imports
   ],
   providers: [UsersService],
-  controllers: [UsersController]
+  controllers: [UsersController],
 })
 export class UsersModule {}

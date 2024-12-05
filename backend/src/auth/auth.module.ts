@@ -8,6 +8,6 @@ import { User } from '../entities/users.entity';
   imports: [TypeOrmModule.forFeature([User])],
   providers: [AuthService],
   controllers: [AuthController],
-  exports: [AuthService]  // 添加这一行，导出 AuthService
+  exports: [AuthService], // 添加这一行，导出 AuthService
 })
 export class AuthModule {}

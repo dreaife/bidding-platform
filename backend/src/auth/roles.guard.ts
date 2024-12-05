@@ -7,7 +7,10 @@ import { AuthService } from './auth.service';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
-  constructor(private reflector: Reflector,private authService: AuthService) {}
+  constructor(
+    private reflector: Reflector,
+    private authService: AuthService,
+  ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const requiredRoles = this.reflector.getAllAndOverride<Role[]>(ROLES_KEY, [
@@ -24,7 +27,7 @@ export class RolesGuard implements CanActivate {
     const token = request.headers.authorization?.split(' ')[1];
 
     // console.log('token', token);
-    
+
     if (!token) {
       throw new UnauthorizedException('No token provided');
     }

@@ -9,6 +9,6 @@ import { AuthModule } from '../auth/auth.module';
     // ... 其他imports
   ],
   providers: [AdminService],
-  controllers: [AdminController]
+  controllers: [AdminController],
 })
 export class AdminModule {}

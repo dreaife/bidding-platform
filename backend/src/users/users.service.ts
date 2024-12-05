@@ -78,7 +78,10 @@ export class UsersService {
    * @param user 用户信息
    * @returns 更新后的用户
    */
-  async updateProfile(userId: number, updateData: Partial<User>): Promise<Partial<User>> {
+  async updateProfile(
+    userId: number,
+    updateData: Partial<User>,
+  ): Promise<Partial<User>> {
     await this.dataSource.getRepository(User).update(userId, updateData);
     return this.findOne(userId);
   }
@@ -89,7 +92,9 @@ export class UsersService {
    * @returns 项目列表
    */
   findUserProjects(id: number) {
-    return this.dataSource.getRepository(Project).find({ where: { client_id: id } });
+    return this.dataSource
+      .getRepository(Project)
+      .find({ where: { client_id: id } });
   }
 
   /**
@@ -98,6 +103,8 @@ export class UsersService {
    * @returns 投标列表
    */
   findUserBids(id: number) {
-    return this.dataSource.getRepository(Bid).find({ where: { bidder_id: id } });
+    return this.dataSource
+      .getRepository(Bid)
+      .find({ where: { bidder_id: id } });
   }
 }

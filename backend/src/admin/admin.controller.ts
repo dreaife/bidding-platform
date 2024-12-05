@@ -1,6 +1,6 @@
 import { Controller } from '@nestjs/common';
 import { AdminService } from './admin.service';
-import { Get, Param, Put, Delete, Body, Post } from '@nestjs/common';
+import { Get, Param, Put, Delete, Body } from '@nestjs/common';
 import { User } from '../entities/users.entity';
 import { Project } from '../entities/projects.entity';
 import { Bid } from '../entities/bids.entity';
@@ -38,7 +38,9 @@ export class AdminController {
   @Put('users/:id')
   @ApiOperation({ summary: '更新用户' })
   updateUser(@Param('id') id: number, @Body() user: User) {
-    this.logger.log(`admin updateUser by id: ${id} with body: ${JSON.stringify(user)}`);
+    this.logger.log(
+      `admin updateUser by id: ${id} with body: ${JSON.stringify(user)}`,
+    );
     return this.adminService.updateUser(id, user);
   }
 
@@ -67,7 +69,9 @@ export class AdminController {
   @Put('projects/:id')
   @ApiOperation({ summary: '更新项目' })
   updateProject(@Param('id') id: number, @Body() project: Project) {
-    this.logger.log(`admin updateProject by id: ${id} with body: ${JSON.stringify(project)}`);
+    this.logger.log(
+      `admin updateProject by id: ${id} with body: ${JSON.stringify(project)}`,
+    );
     return this.adminService.updateProject(id, project);
   }
 
@@ -96,7 +100,9 @@ export class AdminController {
   @Put('bids/:id')
   @ApiOperation({ summary: '更新投标' })
   updateBid(@Param('id') id: number, @Body() bid: Bid) {
-    this.logger.log(`admin updateBid by id: ${id} with body: ${JSON.stringify(bid)}`);
+    this.logger.log(
+      `admin updateBid by id: ${id} with body: ${JSON.stringify(bid)}`,
+    );
     return this.adminService.updateBid(id, bid);
   }
 

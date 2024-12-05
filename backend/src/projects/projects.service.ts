@@ -57,7 +57,9 @@ export class ProjectsService {
    * @returns 所有公开项目
    */
   getOpenProjects() {
-    return this.dataSource.getRepository(Project).find({ where: { status: 'open' } });
+    return this.dataSource
+      .getRepository(Project)
+      .find({ where: { status: 'open' } });
   }
 
   /**
@@ -66,6 +68,8 @@ export class ProjectsService {
    * @returns 完成后的项目
    */
   completeProject(id: number) {
-    return this.dataSource.getRepository(Project).update(id, { status: 'completed' });
+    return this.dataSource
+      .getRepository(Project)
+      .update(id, { status: 'completed' });
   }
 }

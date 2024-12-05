@@ -1,6 +1,6 @@
 import { Controller, Logger } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { Get, Param, Put, Delete, Body, Post, Request, Headers } from '@nestjs/common';
+import { Get, Param, Put, Delete, Body, Post } from '@nestjs/common';
 import { User } from '../entities/users.entity';
 import { Roles } from '../auth/roles.decorator';
 import { Role } from '../auth/roles.enum';
@@ -16,7 +16,10 @@ import { AuthService } from '../auth/auth.service';
 @ApiTags('Users')
 export class UsersController {
   private logger = new Logger('UsersController');
-  constructor(private readonly usersService: UsersService, private readonly authService: AuthService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly authService: AuthService,
+  ) {}
 
   // user profile
   @Post('/profile')
@@ -48,9 +51,11 @@ export class UsersController {
   @Roles(Role.Admin, Role.Client, Role.Bidder)
   async updateProfile(
     @Body('userId') userId: number,
-    @Body() updateData: Partial<User>
+    @Body() updateData: Partial<User>,
   ): Promise<Partial<User>> {
-    this.logger.log(`users updateProfile by id: ${userId} with body: ${JSON.stringify(updateData)}`);
+    this.logger.log(
+      `users updateProfile by id: ${userId} with body: ${JSON.stringify(updateData)}`,
+    );
     return this.usersService.updateProfile(userId, updateData);
   }
 
@@ -74,7 +79,9 @@ export class UsersController {
   @ApiOperation({ summary: '更新用户' })
   @Roles(Role.Admin)
   update(@Param('id') id: number, @Body() user: User) {
-    this.logger.log(`users update by id: ${id} with body: ${JSON.stringify(user)}`);
+    this.logger.log(
+      `users update by id: ${id} with body: ${JSON.stringify(user)}`,
+    );
     return this.usersService.update(id, user);
   }
 
@@ -101,5 +108,4 @@ export class UsersController {
     this.logger.log(`users getName by id: ${id}`);
     return this.usersService.getName(id);
   }
-
 }

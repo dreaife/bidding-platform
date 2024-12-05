@@ -9,6 +9,6 @@ import { AuthModule } from '../auth/auth.module';
     // ... 其他imports
   ],
   providers: [BidsService],
-  controllers: [BidsController]
+  controllers: [BidsController],
 })
 export class BidsModule {}
