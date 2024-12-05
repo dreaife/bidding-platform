@@ -58,16 +58,16 @@ jobs:
       run: |
         npm install
         npm run build --prod
-      outputs:
-        frontend-dist: ${{ steps.build-frontend.outputs.frontend-dist }}
+      # outputs:
+      #   frontend-dist: ${{ steps.build-frontend.outputs.frontend-dist }}
 
     - name: Build Backend
       working-directory: backend
       run: |
         npm install
         npm run build
-      outputs:
-        backend-dist: ${{ steps.build-backend.outputs.backend-dist }}
+      # outputs:
+      #   backend-dist: ${{ steps.build-backend.outputs.backend-dist }}
 
   deploy:
     runs-on: ubuntu-latest
