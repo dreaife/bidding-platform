@@ -19,10 +19,20 @@ jobs:
         node-version: 20
 
     - name: Install Dependencies
-      run: npm install
+      run: |
+        cd backend
+        npm install
+        cd ../frontend
+        npm install
+        cd ..
 
     - name: Run Tests
-      run: npm run test:cov
+      run: |
+        cd backend
+        npm run test:cov
+        cd ../frontend
+        npm run test:cov
+        cd ..
 
     - name: Upload Test Report to S3
       uses: jakejarvis/s3-sync-action@v0.5.1
