@@ -46,6 +46,11 @@ api文档地址：[https://bidding-platform.server.digocean.dreaife.tokyo/swagge
 - 使用 Angular CLI 开发前端
 - 使用 Nest.js 开发后端
 
+## 测试
+
+- 使用 Jest 测试后端
+- 使用 Jest 测试前端
+
 ## 参考
 
 - [Nest.js 文档](https://docs.nestjs.com/)
