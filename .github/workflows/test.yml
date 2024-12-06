@@ -45,8 +45,6 @@ jobs:
     - name: SonarQube Scan
       uses: sonarsource/sonarcloud-github-action@v4
       env:
-        SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
-        SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
         SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN  }}
 
     - name: Upload Test Reports
