@@ -27,11 +27,10 @@ export class ProjectDetailComponent implements OnInit {
     private bidsService: BidsService,
     private authService: AuthService,
     private usersService: UsersService
-  ) {
-    this.userRole = this.authService.getUserRole();
-  }
+  ) {}
 
   ngOnInit() {
+    this.userRole = this.authService.getUserRole();
     const projectId = this.route.snapshot.paramMap.get('id');
     if (projectId) {
       this.loadProject(+projectId);

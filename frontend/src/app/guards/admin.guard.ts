@@ -7,8 +7,12 @@ export const adminGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
-  if (authService.isAdmin()) {
-    return true;
+  try {
+    if (authService.isAdmin()) {
+      return true;
+    }
+  } catch (error) {
+    console.error('Admin check failed:', error);
   }
   
   router.navigate(['/projects']);

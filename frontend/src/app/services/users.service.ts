@@ -12,37 +12,31 @@ export class UsersService {
   constructor(private http: HttpClient) { }
 
   getUsers(): any {
-    return fetch(this.apiUrl);
+    return this.http.get(this.apiUrl);
   }
 
   getUserById(userId: number): any {
-    return fetch(`${this.apiUrl}/${userId}`);
+    return this.http.get(`${this.apiUrl}/${userId}`);
   }
 
   createUser(user: any): any {
-    return fetch(this.apiUrl, {
-      method: 'POST',
+    return this.http.post(this.apiUrl, user, {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(user)
     });
   }
 
   updateUser(userId: number, user: any): any {
-    return fetch(`${this.apiUrl}/${userId}`, {
-      method: 'PUT',
+    return this.http.put(`${this.apiUrl}/${userId}`, user, {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(user)
     });
   }
 
   deleteUser(userId: number): any {
-    return fetch(`${this.apiUrl}/${userId}`, {
-      method: 'DELETE'
-    });
+    return this.http.delete(`${this.apiUrl}/${userId}`);
   }
 
   getCurrentUser(userId: number): Observable<any> {

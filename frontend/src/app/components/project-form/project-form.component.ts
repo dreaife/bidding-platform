@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { switchMap, take, tap } from 'rxjs/operators';
 @Component({
   selector: 'app-project-form',
   standalone: true,
@@ -37,12 +38,17 @@ export class ProjectFormComponent {
       this.submitting = true;
       this.error = '';
 
-      this.authService.currentUser$.subscribe(user => {
-        this.projectForm.value.client_id = user.user_id;
-      });
+      const projectData = { ...this.projectForm.value };
 
-      this.projectsService.createProject(this.projectForm.value).subscribe({
+      this.authService.currentUser$.pipe(
+        take(1),
+        tap(user => {
+          projectData.client_id = user.user_id;
+        }),
+        switchMap(() => this.projectsService.createProject(projectData))
+      ).subscribe({
         next: () => {
+          this.submitting = false;
           this.router.navigate(['/projects']);
         },
         error: (err) => {

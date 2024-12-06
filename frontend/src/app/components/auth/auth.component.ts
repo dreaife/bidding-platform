@@ -71,4 +71,19 @@ export class AuthComponent {
     this.username = '';
     this.confirmationCode = '';
   }
+
+  toggleMode() {
+    if (!this.needConfirm) {
+      this.isLogin = !this.isLogin;
+      this.resetForm();
+    }
+  }
+
+  resetForm() {
+    this.email = '';
+    this.password = '';
+    this.username = '';
+    this.confirmationCode = '';
+    this.error = '';
+  }
 }
