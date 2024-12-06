@@ -1,0 +1,46 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 20
+
+    - name: Install Dependencies
+      run: |
+        cd backend
+        npm install
+        cd ../frontend
+        npm install
+        cd ..
+
+    - name: Run Tests
+      run: |
+        cd backend
+        npm run test:cov
+        npm run lint || true
+        cd ../frontend
+        npm run test:cov
+        npm run lint || true
+        cd ..
+
+    - name: Upload Test Reports
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-reports
+        path: reports/ 
