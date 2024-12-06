@@ -37,14 +37,14 @@ jobs:
     - name: Upload Test Report to S3
       uses: jakejarvis/s3-sync-action@v0.5.1
       with:
-        args: 'reports/backend/coverage s3://${{ secrets.AWS_S3_BUCKET }}/test-reports --acl public-read --follow-symlinks --delete'
+        args: --acl public-read --follow-symlinks --delete
       env:
         AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_REGION: 'ap-northeast-1'  # 根据您的 S3 区域设置
         SOURCE_DIR: 'reports/backend/coverage'  # 测试报告目录
-        # DEST_DIR: 's3://test-reports'  # S3 中的目标目录
+        DEST_DIR: 's3://test-reports'  # S3 中的目标目录
 
   package:
     runs-on: ubuntu-latest
