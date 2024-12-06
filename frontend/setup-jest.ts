@@ -1,10 +1,14 @@
+// 禁用所有 console 输出
+global.console = {
+    ...console,
+    log: jest.fn(),
+    error: jest.fn(),
+    warn: jest.fn(),
+    info: jest.fn(),
+    debug: jest.fn(),
+  };
+  
 import { setupZoneTestEnv } from 'jest-preset-angular/setup-env/zone';
 import 'whatwg-fetch';
 
 setupZoneTestEnv();
-
-// 禁用 console.error
-global.console.error = jest.fn();
-global.console.warn = jest.fn();
-global.console.info = jest.fn();
-global.console.debug = jest.fn();
