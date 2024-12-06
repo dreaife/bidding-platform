@@ -38,9 +38,9 @@ jobs:
         npm run test:cov
         npm run lint || true
         cd ..
+        pwd
         mkdir -p ./coverage
-        cp -r reports/backend/coverage/lcov.info coverage/backend.lcov
-        cp -r reports/frontend/coverage/lcov.info coverage/frontend.lcov
+        cp -r reports/backend/coverage/lcov.info coverage/lcov.info
     
     - name: SonarQube Scan
       uses: sonarsource/sonarcloud-github-action@v4
