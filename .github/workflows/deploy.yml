@@ -43,7 +43,7 @@ jobs:
 
     - name: Sync files to S3
       run: |
-        aws s3 sync reports/backend/coverage s3://${{ secrets.AWS_S3_BUCKET }}/bidding-platform/test-reports --acl public-read --delete
+        aws s3 sync reports/backend/coverage s3://${{ secrets.AWS_S3_BUCKET }}/bidding-platform/test-reports --delete
 
   package:
     runs-on: ubuntu-latest
