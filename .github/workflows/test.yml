@@ -41,9 +41,10 @@ jobs:
 
     - name: Copy Test Reports
       run: |
-        mkdir -p coverage
-        cp -r backend/reports/lcov.info coverage/backend.lcov
-        cp -r frontend/reports/lcov.info coverage/frontend.lcov
+        pwd
+        mkdir -p ./coverage
+        cp -r ./reports/backend/reports/lcov.info coverage/backend.lcov
+        cp -r ./reports/frontend/reports/lcov.info coverage/frontend.lcov
     
     - name: SonarQube Scan
       uses: sonarsource/sonarcloud-github-action@v4
