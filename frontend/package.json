@@ -82,7 +82,7 @@
         "stringifyContentPathRegex": "\\.html$"
       }
     },
-    "coverageDirectory": "<rootDir>/coverage/",
+    "coverageDirectory": "<rootDir>/../reports/frontend/coverage",
     "collectCoverage": true,
     "coverageReporters": [
       "html",

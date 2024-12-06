@@ -83,7 +83,7 @@
       "!main.ts",
       "!**/node_modules/**"
     ],
-    "coverageDirectory": "../../reports/backend/coverage",
+    "coverageDirectory": "<rootDir>/../../reports/backend/coverage",
     "testEnvironment": "node",
     "moduleNameMapper": {
       "^src/(.*)$": "<rootDir>/$1"
