@@ -46,8 +46,7 @@ jobs:
       uses: sonarsource/sonarcloud-github-action@v4
       env:
         SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN  }}
-        SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
-        SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
+        GITHUB_TOKEN: ${{ secrets.GHUB_TOKEN }}
 
     - name: Upload Test Reports
       uses: actions/upload-artifact@v3
