@@ -1,57 +1,103 @@
-# bidding-platform
+# 🚀 Bidding Platform - Built with Nest.js and Angular
 
-本项目是基于 Nest.js 和 Angular 的竞价平台。包含登录/注册、竞价、用户管理、竞标管理等功能。
+[English](https://github.com/dreaife/bidding-platform/blob/master/README.md) | [简体中文](https://github.com/dreaife/bidding-platform/blob/master/README_zh_CN.md)
 
-登录/注册部分与Cognito集成，使用Cognito的Token进行API请求。
+Welcome to **Bidding Platform**! This is a powerful bidding platform built with **Nest.js** and **Angular**, designed to provide users with an efficient and secure bidding and management experience.
 
-项目部署在DigitalOcean的Droplet上，使用Nginx部署前端。
+---
 
-项目部署地址：[https://bidding-platform.server.digocean.dreaife.tokyo](https://bidding-platform.server.digocean.dreaife.tokyo)
+## 🌟 Project Overview
 
-后端部分通过swagger文档管理API。
+This project is a comprehensive bidding platform that supports the following core features:
 
-api文档地址：[https://bidding-platform.server.digocean.dreaife.tokyo/swagger](https://bidding-platform.server.digocean.dreaife.tokyo/swagger)
+• **Login/Registration**: Integrated with **AWS Cognito**, using Cognito's Token for API requests.  
+• **Bidding Management**: Users can create, view, and manage bidding projects.  
+• **User Management**: Supports user role management, including administrators, clients, and bidders.  
+• **Bid Management**: Users can submit bids and view bid status.  
 
-## 项目结构
+The project is deployed on a **DigitalOcean Droplet**, with the frontend served via **Nginx**.
 
-- frontend: 前端项目
-- backend: 后端项目
-- .github: GitHub Actions 配置
+---
 
-## 项目依赖
+## 🌐 Project Links
 
-- Node.js
-  - version: v20.18.0
-- Nest.js
-  - version: 10.1.0
-- Angular
-  - version: 16.3.1
+• **Project Deployment URL**: [https://bidding-platform.server.digocean.dreaife.tokyo](https://bidding-platform.server.digocean.dreaife.tokyo)  
+• **API Documentation URL**: [https://bidding-platform.server.digocean.dreaife.tokyo/swagger](https://bidding-platform.server.digocean.dreaife.tokyo/swagger)  
 
-## 运行
+---
 
-- 运行后端：`run-backend.cmd`
-  - 需要先在 backend 目录下运行 `npm install`
-  - 运行 `npm run start` 启动后端
-- 运行前端：`run-frontend.cmd`
-  - 需要先在 frontend 目录下运行 `npm install`
-  - 运行 `npm run start` 启动前端
+## 📂 Project Structure
 
-## 部署
+• **`frontend`**: Frontend project, built with **Angular**.  
+• **`backend`**: Backend project, built with **Nest.js**.  
+• **`.github`**: Contains **GitHub Actions** configuration files for continuous integration and deployment.  
 
-- 使用 GitHub Actions 部署到 DigitalOcean Droplet
-- 在server上使用nginx部署前端
+---
 
-## 开发
+## 📦 Project Dependencies
 
-- 使用 Angular CLI 开发前端
-- 使用 Nest.js 开发后端
+• **Node.js**: v20.18.0  
+• **Nest.js**: v10.1.0  
+• **Angular**: v16.3.1  
 
-## 测试
+---
 
-- 使用 Jest 测试后端
-- 使用 Jest 测试前端
+## 🛠 Running the Project
 
-## 参考
+### Backend
+1. Navigate to the `backend` directory and run the following commands:
+   ```bash
+   npm install
+   npm run start
+   ```
 
-- [Nest.js 文档](https://docs.nestjs.com/)
-- [Angular 文档](https://angular.io/docs)
+### Frontend
+1. Navigate to the `frontend` directory and run the following commands:
+   ```bash
+   npm install
+   npm run start
+   ```
+
+---
+
+## 🚀 Deployment
+
+The project uses **GitHub Actions** to automatically deploy to a **DigitalOcean Droplet**. On the server, the frontend is served via **Nginx**.
+
+---
+
+## 💻 Development
+
+• **Frontend Development**: Use **Angular CLI** for development.  
+• **Backend Development**: Use **Nest.js** for development.  
+
+---
+
+## 🧪 Testing
+
+• **Backend Testing**: Uses **Jest** for unit and integration testing.  
+• **Frontend Testing**: Uses **Jest** for unit testing.  
+
+---
+
+## 📚 Reference Documentation
+
+• **Nest.js Documentation**: [https://docs.nestjs.com/](https://docs.nestjs.com/)  
+• **Angular Documentation**: [https://angular.io/docs](https://angular.io/docs)  
+
+---
+
+## 📜 License
+
+This project is licensed under the **MIT License**. For more details, see [LICENSE](LICENSE).
+
+---
+
+## 📢 Contact and Support
+
+• **GitHub Issues**: [Report an Issue](https://github.com/dreaife/bidding-platform/issues)  
+• **Author**: [dreaife](https://github.com/dreaife)  
+
+---
+
+🌟 **If you like this project, please give it a ⭐! Happy coding!** 🚀
